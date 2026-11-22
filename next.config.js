@@ -4,14 +4,20 @@ const nextConfig = {
   images: {
     domains: ["images.unsplash.com", "grandeurnet.com"],
   },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "framer-motion"],
+  },
   async headers() {
+    if (process.env.NODE_ENV === "development") {
+      return [];
+    }
     return [
       {
         source: "/(.*)",
         headers: [
           {
             key: "X-Frame-Options",
-            value: "DENY",
+            value: "SAMEORIGIN",
           },
           {
             key: "X-Content-Type-Options",

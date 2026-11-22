@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, phone, service, budget, message } = validationResult.data;
+    const { name, company, email, phone, service, budget, message } = validationResult.data;
 
     // 2. Resend Email Dispatch (if API key is configured)
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -35,10 +35,11 @@ export async function POST(request: Request) {
             from: "Grandeur Net <noreply@grandeurnet.com>",
             to: ["info@grandeurnet.com"],
             reply_to: email,
-            subject: `[New Lead] ${name} (${service.toUpperCase()} - ${budget})`,
+            subject: `[New Lead] ${name} ${company ? `(${company})` : ""} - ${service.toUpperCase()} - ${budget}`,
             html: `
               <h2>New Project Inquiry from Grandeur Net Portfolio</h2>
               <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Company:</strong> ${company || "Not provided"}</p>
               <p><strong>Email:</strong> ${email}</p>
               <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
               <p><strong>Service:</strong> ${service}</p>
@@ -60,6 +61,7 @@ export async function POST(request: Request) {
     } else {
       console.log("Development Mode: Contact inquiry logged safely:", {
         name,
+        company,
         email,
         phone,
         service,

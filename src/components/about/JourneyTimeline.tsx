@@ -3,16 +3,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Calendar,
   Rocket,
   Code2,
   Globe,
   Cpu,
-  Sparkles,
-  ArrowRight,
   CheckCircle2,
-  Award,
   Milestone,
+  ArrowRight,
+  TrendingUp,
 } from "lucide-react";
 
 interface TimelineMilestone {
@@ -23,18 +21,17 @@ interface TimelineMilestone {
   summary: string;
   achievements: string[];
   metrics: { label: string; value: string };
-  icon: any;
-  accent: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 const MILESTONES: TimelineMilestone[] = [
   {
     year: "2017",
-    badge: "INCEPTION // DEHRADUN LABS",
+    badge: "FOUNDING // DEHRADUN LABS",
     title: "Founding & Core Engineering Inception",
     tagline: "Boutique Creative & Tech Studio",
     summary:
-      "Grandeur Net was founded in 2017 at Bengali Kothi Chowk in Dehradun with a small, focused group of creators, designers, and problem-solvers. We set out to deliver digital experiences with obsessive craft, sub-second speeds, and direct builder collaboration.",
+      "Grandeur Net was founded in 2017 at Bengali Kothi Chowk in Dehradun with a small, focused group of creators and problem-solvers. We set out to deliver digital experiences with obsessive craft, sub-second speeds, and direct builder collaboration.",
     achievements: [
       "Established foundational Dehradun engineering office on Haridwar Bypass Rd",
       "Delivered first 25 high-converting client websites and custom e-commerce builds",
@@ -42,7 +39,6 @@ const MILESTONES: TimelineMilestone[] = [
     ],
     metrics: { label: "Client Satisfaction", value: "100%" },
     icon: Rocket,
-    accent: "#10b981",
   },
   {
     year: "2019-20",
@@ -50,7 +46,7 @@ const MILESTONES: TimelineMilestone[] = [
     title: "Headless Web & Microservices Transition",
     tagline: "High-Concurrency Node & Next.js",
     summary:
-      "As digital demands expanded rapidly, we transitioned client platforms into modern decoupled headless architectures with Next.js, Redis caching, and PostgreSQL microservices — setting up our standard 14-day agile sprint delivery model.",
+      "As digital demands expanded rapidly, we transitioned client platforms into modern decoupled headless architectures with Next.js, Redis caching, and PostgreSQL microservices — establishing our standard 14-day agile sprint delivery model.",
     achievements: [
       "Expanded engineering guild to 15+ in-house full-stack developers and designers",
       "Architected real-time fleet mobility software handling 50,000+ daily user searches",
@@ -58,7 +54,6 @@ const MILESTONES: TimelineMilestone[] = [
     ],
     metrics: { label: "Performance Gain", value: "+340%" },
     icon: Code2,
-    accent: "#38bdf8",
   },
   {
     year: "2022-23",
@@ -66,15 +61,14 @@ const MILESTONES: TimelineMilestone[] = [
     title: "International Expansion Across 5 Global Markets",
     tagline: "India, Australia, UAE, UK & USA",
     summary:
-      "Our reputation for zero-downtime deliveries and direct senior engineering attracted clients worldwide. We expanded our active footprint across India, Australia, the UAE, the United Kingdom, and the United States.",
+      "Our reputation for zero-downtime deliveries and direct senior engineering attracted clients worldwide. We expanded our active client footprint across India, Australia, the UAE, the United Kingdom, and the United States.",
     achievements: [
       "Crossed 150+ successfully shipped digital web platforms and cloud apps",
       "Formed dedicated DevOps & Cloud Infrastructure division with AWS and edge networks",
       "Achieved audited 99.4% on-time sprint milestone completion rate",
     ],
-    metrics: { label: "Global Footprint", value: "5 Countries" },
+    metrics: { label: "Global Footprint", value: "5 Markets" },
     icon: Globe,
-    accent: "#a855f7",
   },
   {
     year: "2024-25+",
@@ -90,170 +84,196 @@ const MILESTONES: TimelineMilestone[] = [
     ],
     metrics: { label: "Shipped Projects", value: "250+" },
     icon: Cpu,
-    accent: "#34d399",
   },
 ];
 
 export default function JourneyTimeline() {
-  const [selectedMilestone, setSelectedMilestone] = useState(3); // default to 2024+
+  const [selectedIdx, setSelectedIdx] = useState(3); // Default to current milestone
+  const activeMilestone = MILESTONES[selectedIdx];
 
   return (
-    <section className="py-28 px-4 sm:px-6 md:px-12 bg-brand-dark relative overflow-hidden">
-      {/* Ambient background */}
-      <div className="absolute top-1/3 left-1/4 w-[750px] h-[400px] bg-brand-green/[0.04] rounded-full blur-[160px] pointer-events-none animate-float-slow" />
-      <div className="absolute bottom-10 right-10 w-[550px] h-[550px] bg-brand-navy/60 rounded-full blur-[140px] pointer-events-none animate-float-reverse" />
-      <div className="absolute inset-0 cyber-grid pointer-events-none opacity-20" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-12 bg-[#F3F6FA] dark:bg-[#071321] transition-colors duration-300">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-navy/90 border border-brand-green/40 text-brand-green font-mono text-[10px] font-bold uppercase tracking-wider mb-4 shadow-sm">
-            <Milestone className="w-3.5 h-3.5 text-brand-green" />
-            <span>8+ Years of Digital Excellence // Est. 2017</span>
+        <div className="max-w-3xl mb-14 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#0B1929] border border-slate-200 dark:border-white/[0.08] text-[#00A980] dark:text-[#00C99A] font-mono text-[11px] font-bold uppercase tracking-wider mb-4 shadow-sm">
+            <Milestone className="w-3.5 h-3.5" />
+            <span>8+ Years of Digital Excellence</span>
           </div>
-
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-[#10243A] dark:text-white tracking-tight leading-tight">
             From Dehradun Foothills to <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-green via-teal-300 to-emerald-200">
+            <span className="text-[#00A980] dark:text-[#00C99A]">
               5 Global Continents & Markets
             </span>
           </h2>
-
-          <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
-            Over eight years of relentless technical iteration and craft. Here is how we grew from a boutique Dehradun studio into an elite product guild trusted by fast-growing brands across India, Australia, UAE, UK, and USA.
+          <p className="mt-4 text-sm sm:text-base text-slate-600 dark:text-[#8999AD] leading-relaxed max-w-2xl font-normal">
+            Over eight years of disciplined technical execution and craft. How Grandeur Net evolved from a focused regional studio into an internationally trusted digital engineering team.
           </p>
         </div>
 
-        {/* Interactive Year Selector Track */}
-        <div className="relative mb-12">
-          {/* Connecting Line */}
-          <div className="hidden md:block absolute top-1/2 left-10 right-10 -translate-y-1/2 h-[2px] bg-white/[0.08] z-0">
-            {/* Animated Laser Beam */}
-            <motion.div
-              className="h-full w-40 bg-gradient-to-r from-transparent via-brand-green to-transparent"
-              animate={{ x: ["-100%", "400%"] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-            />
-          </div>
+        {/* =========================================================================
+            DESKTOP TIMELINE: Horizontal Navigation Bar with Progress Line
+            ========================================================================= */}
+        <div className="hidden md:block relative mb-12">
+          {/* Subtle Track Connecting Line */}
+          <div className="absolute top-1/2 left-8 right-8 -translate-y-1/2 h-[2px] bg-slate-200 dark:bg-white/[0.08] z-0" />
 
-          {/* 4 Year Buttons */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+          {/* 4 Milestone Buttons */}
+          <div className="grid grid-cols-4 gap-6 relative z-10">
             {MILESTONES.map((m, idx) => {
-              const isSelected = selectedMilestone === idx;
+              const isSelected = selectedIdx === idx;
               const Icon = m.icon;
 
               return (
                 <button
                   key={m.year}
-                  onClick={() => setSelectedMilestone(idx)}
-                  className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col items-center text-center cursor-pointer select-none ${
+                  onClick={() => setSelectedIdx(idx)}
+                  className={`p-5 rounded-2xl border transition-all duration-300 text-left cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? "bg-gradient-to-b from-[#0f2133] to-[#071322] border-brand-green shadow-[0_10px_30px_-10px_rgba(16,185,129,0.5)] scale-[1.03]"
-                      : "bg-[#09111e]/90 border-white/[0.08] hover:border-brand-green/40 hover:bg-[#0c1626]"
+                      ? "bg-white dark:bg-[#0B1929] border-[#00C99A] shadow-lg shadow-[#00C99A]/10 -translate-y-1"
+                      : "bg-white/80 dark:bg-[#0B1929]/60 border-slate-200 dark:border-white/[0.08] hover:border-slate-300 dark:hover:border-white/[0.15]"
                   }`}
                 >
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-colors ${
-                      isSelected
-                        ? "bg-brand-green text-brand-dark shadow-[0_0_20px_rgba(16,185,129,0.7)]"
-                        : "bg-brand-navy border border-brand-green/30 text-brand-green"
-                    }`}
-                  >
-                    <Icon className="w-6 h-6" />
+                  <div className="flex items-center justify-between mb-3">
+                    <span
+                      className={`text-2xl font-black font-mono tracking-tight transition-colors ${
+                        isSelected ? "text-[#00A980] dark:text-[#00C99A]" : "text-[#10243A] dark:text-white"
+                      }`}
+                    >
+                      {m.year}
+                    </span>
+                    <div
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
+                        isSelected
+                          ? "bg-[#00C99A] text-[#05090B]"
+                          : "bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-[#8999AD]"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </div>
                   </div>
-
-                  <span
-                    className={`text-2xl font-black font-mono tracking-tight transition-colors ${
-                      isSelected ? "text-brand-green" : "text-white"
-                    }`}
-                  >
-                    {m.year}
-                  </span>
-
-                  <span className="text-[11px] font-mono text-slate-400 mt-1 truncate max-w-full font-semibold">
+                  <div className="text-xs font-semibold text-slate-700 dark:text-slate-300 truncate">
                     {m.tagline}
-                  </span>
+                  </div>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Selected Milestone Interactive Showcase Card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedMilestone}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -18 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-[#0e1d2e] via-[#091522] to-[#050b14] border-2 border-brand-green/40 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.9),0_0_35px_rgba(16,185,129,0.15)] relative overflow-hidden"
-          >
-            {/* Tech Reticles */}
-            <div className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-brand-green" />
-            <div className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-brand-green" />
-            <div className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-brand-green" />
-            <div className="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-brand-green" />
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              {/* Left Column: Narrative & Details */}
-              <div className="lg:col-span-8 space-y-4">
-                <div className="flex items-center gap-3">
-                  <span className="px-3 py-1 rounded-full bg-brand-green/10 text-brand-green font-mono text-[10px] font-bold border border-brand-green/30">
-                    {MILESTONES[selectedMilestone].badge}
-                  </span>
-                  <span className="text-xs font-mono text-slate-400">
-                    Grandeur Net Milestone Telemetry
-                  </span>
-                </div>
-
-                <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                  {MILESTONES[selectedMilestone].title}
-                </h3>
-
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-                  {MILESTONES[selectedMilestone].summary}
-                </p>
-
-                {/* Achievements List */}
-                <div className="space-y-3 pt-4 border-t border-white/[0.08]">
-                  <div className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold">
-                    Key Milestones Accomplished:
+        {/* Selected Milestone Detail Showcase (Desktop) */}
+        <div className="hidden md:block">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedIdx}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#0B1929] border border-slate-200 dark:border-white/[0.08] shadow-sm"
+            >
+              <div className="grid grid-cols-12 gap-8 items-start">
+                {/* Left: Milestone Summary & Accomplishments */}
+                <div className="col-span-8 space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-full bg-[#00C99A]/10 text-[#00A980] dark:text-[#00C99A] font-mono text-[11px] font-bold border border-[#00C99A]/30">
+                      {activeMilestone.badge}
+                    </span>
+                    <span className="text-xs font-mono text-slate-400 dark:text-[#8999AD]">
+                      Milestone Telemetry
+                    </span>
                   </div>
-                  {MILESTONES[selectedMilestone].achievements.map((ach, aIdx) => (
-                    <div key={aIdx} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-brand-green/10 border border-brand-green/40 flex items-center justify-center shrink-0 mt-0.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-brand-green" />
-                      </div>
-                      <span className="text-xs sm:text-sm text-slate-200 font-medium">
-                        {ach}
-                      </span>
+
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#10243A] dark:text-white tracking-tight">
+                    {activeMilestone.title}
+                  </h3>
+
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-[#8999AD] leading-relaxed font-normal">
+                    {activeMilestone.summary}
+                  </p>
+
+                  <div className="pt-4 border-t border-slate-100 dark:border-white/[0.08] space-y-2.5">
+                    <div className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-[#8999AD]">
+                      Key Accomplishments:
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Column: Key Metric Highlight Box */}
-              <div className="lg:col-span-4 p-6 sm:p-7 rounded-2xl bg-brand-navy/90 border border-brand-green/30 flex flex-col justify-between h-full space-y-6">
-                <div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-2">
-                    Milestone Benchmark
-                  </div>
-                  <div className="text-4xl sm:text-5xl font-black font-mono text-brand-green tracking-tight">
-                    {MILESTONES[selectedMilestone].metrics.value}
-                  </div>
-                  <div className="text-xs font-mono font-bold text-slate-300 mt-1">
-                    {MILESTONES[selectedMilestone].metrics.label}
+                    {activeMilestone.achievements.map((item, aIdx) => (
+                      <div key={aIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+                        <CheckCircle2 className="w-4 h-4 text-[#00C99A] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/[0.08] text-xs font-mono text-slate-400">
-                  <span>Audited via production telemetry and client balance sheets.</span>
+                {/* Right: Benchmark Highlight Box */}
+                <div className="col-span-4 p-6 sm:p-8 rounded-2xl bg-slate-50 dark:bg-[#071321] border border-slate-200 dark:border-white/[0.08] flex flex-col justify-between h-full min-h-[220px]">
+                  <div>
+                    <div className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-[#8999AD] mb-2 font-semibold">
+                      Milestone Benchmark
+                    </div>
+                    <div className="text-4xl sm:text-5xl font-black font-mono text-[#00A980] dark:text-[#00C99A] tracking-tight">
+                      {activeMilestone.metrics.value}
+                    </div>
+                    <div className="text-sm font-bold text-[#10243A] dark:text-white mt-1">
+                      {activeMilestone.metrics.label}
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-200 dark:border-white/[0.08] text-xs font-mono text-slate-500 dark:text-slate-400">
+                    Production verified and audited.
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* =========================================================================
+            MOBILE TIMELINE: Refined Vertical Timeline Flow
+            ========================================================================= */}
+        <div className="md:hidden space-y-6 relative before:absolute before:inset-0 before:left-5 before:w-0.5 before:bg-slate-200 dark:before:bg-white/[0.08]">
+          {MILESTONES.map((m, idx) => {
+            const Icon = m.icon;
+
+            return (
+              <div key={m.year} className="relative pl-12">
+                {/* Year Node Pin */}
+                <div className="absolute left-2.5 top-5 -translate-x-1/2 w-7 h-7 rounded-full bg-[#00C99A] text-[#05090B] flex items-center justify-center font-mono text-xs font-bold shadow-md shadow-[#00C99A]/30">
+                  <Icon className="w-3.5 h-3.5" />
+                </div>
+
+                {/* Card */}
+                <div className="p-6 rounded-2xl bg-white dark:bg-[#0B1929] border border-slate-200 dark:border-white/[0.08] shadow-sm space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-black font-mono text-[#00A980] dark:text-[#00C99A]">
+                      {m.year}
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-slate-300">
+                      {m.metrics.value}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-bold text-[#10243A] dark:text-white leading-snug">
+                    {m.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-600 dark:text-[#8999AD] leading-relaxed">
+                    {m.summary}
+                  </p>
+
+                  <div className="pt-3 border-t border-slate-100 dark:border-white/[0.06] space-y-2">
+                    {m.achievements.map((item, aIdx) => (
+                      <div key={aIdx} className="flex items-start gap-2 text-xs text-slate-800 dark:text-slate-200">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#00C99A] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

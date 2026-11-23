@@ -1,33 +1,41 @@
 import { Metadata } from "next";
 import AboutHero from "@/components/about/AboutHero";
 import AboutStats from "@/components/about/AboutStats";
-import ClientHappinessSection from "@/components/about/ClientHappinessSection";
+import OurApproachSection from "@/components/about/OurApproachSection";
+import AboutTestimonials from "@/components/about/AboutTestimonials";
 import JourneyTimeline from "@/components/about/JourneyTimeline";
-import TeamCultureSection from "@/components/about/TeamCultureSection";
+import EditorialTeamSection from "@/components/about/EditorialTeamSection";
+import CompanyLocationSection from "@/components/about/CompanyLocationSection";
 
 export const metadata: Metadata = {
-  title: "About Us — Grandeur Net | 8+ Years of Digital Excellence // Est. 2017",
+  title: "About Us — Grandeur Net | Digital Engineering Agency // Est. 2017",
   description:
-    "Discover Grandeur Net's 8+ year journey since 2017 in Dehradun, 250+ shipped projects across 5 global territories (India, Australia, UAE, UK, USA), and our in-house guild with a 98.4% client retention rate.",
+    "Founded in 2017, Grandeur Net is a digital engineering company based in Dehradun, building scalable digital experiences, intelligent platforms, and growth-focused technology solutions for ambitious businesses.",
 };
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-brand-dark">
-      {/* 1. Interactive 3D Hero with Hand Gesture Cursor */}
+    <div className="min-h-screen bg-white dark:bg-[#071321] text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      {/* 1. Hero Section — About Grandeur Net */}
       <AboutHero />
 
-      {/* 2. Key Telemetry & Performance Stats */}
+      {/* 2. Company Achievements & Numbers (Statistics) */}
       <AboutStats />
 
-      {/* 3. The Client Happiness Blueprint & Verified Testimonials */}
-      <ClientHappinessSection />
+      {/* 3. Our Approach — Interactive 6-Step Accordion */}
+      <OurApproachSection />
 
-      {/* 4. The 6-Year Evolution Timeline (2018 - 2024+) */}
+      {/* 4. Client Reviews — Premium Testimonial Slider */}
+      <AboutTestimonials />
+
+      {/* 5. Company Journey & Milestones (Visual Timeline) */}
       <JourneyTimeline />
 
-      {/* 5. In-House Engineering Guild & Dehradun HQ */}
-      <TeamCultureSection />
+      {/* 6. Our Team — Premium Editorial Team Showcase & Studio Work */}
+      <EditorialTeamSection />
+
+      {/* 7. Company Location & Contact Presentation */}
+      <CompanyLocationSection />
     </div>
   );
 }

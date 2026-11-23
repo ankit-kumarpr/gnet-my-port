@@ -3,7 +3,7 @@ import { ArrowUpRight, Github, Linkedin, Twitter, Mail, MapPin, ShieldCheck, Hea
 
 export default function Footer() {
   return (
-    <footer className="bg-[#05090C] border-t border-white/[0.08] text-[#A7B5C5] py-16 px-6 md:px-12 relative overflow-hidden">
+    <footer className="bg-[#F8FAFC] dark:bg-[#05090C] border-t border-slate-200 dark:border-white/[0.08] text-slate-600 dark:text-[#A7B5C5] py-16 px-6 md:px-12 relative overflow-hidden transition-colors duration-300">
       {/* Ambient background glow */}
       <div className="absolute bottom-0 right-1/4 w-96 h-48 rounded-full bg-[#00C995]/[0.03] blur-[120px] pointer-events-none" />
 
@@ -11,16 +11,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
           {/* 1. Brand Identity & Brief */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#00C995] flex items-center justify-center font-black text-lg text-[#05090C] shadow-md shadow-[#00C995]/20">
-                G
-              </div>
-              <span className="font-extrabold text-xl tracking-tight text-white">
-                Grandeur <span className="text-[#00C995]">Net</span>
-              </span>
+            <Link href="/" className="inline-block group">
+              {/* Light mode authentic logo */}
+              <img
+                src="/images/grandeur-net-logo.png"
+                alt="Grandeur Net"
+                className="h-8 sm:h-9 w-auto object-contain dark:hidden transition-transform duration-200 group-hover:scale-[1.02]"
+              />
+              {/* Dark mode authentic logo */}
+              <img
+                src="/images/grandeur-net-logo-dark.png"
+                alt="Grandeur Net"
+                className="h-8 sm:h-9 w-auto object-contain hidden dark:block transition-transform duration-200 group-hover:scale-[1.02]"
+              />
             </Link>
 
-            <p className="text-xs sm:text-sm leading-relaxed max-w-sm text-[#A7B5C5]">
+            <p className="text-xs sm:text-sm leading-relaxed max-w-sm text-slate-600 dark:text-[#A7B5C5]">
               Dehradun’s premier digital engineering agency. Architecting high-conversion
               e-commerce, web applications, and autonomous AI systems for ambitious businesses worldwide.
             </p>
@@ -31,7 +37,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-[#080F18] border border-white/[0.08] flex items-center justify-center text-[#A7B5C5] hover:text-[#00C995] hover:border-[#00C995]/50 transition-colors"
+                className="w-9 h-9 rounded-xl bg-white dark:bg-[#080F18] border border-slate-200 dark:border-white/[0.08] flex items-center justify-center text-slate-600 dark:text-[#A7B5C5] hover:text-[#00C995] dark:hover:text-[#00C995] hover:border-[#00C995]/50 transition-colors shadow-sm"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-4 h-4" />
@@ -40,7 +46,7 @@ export default function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-[#080F18] border border-white/[0.08] flex items-center justify-center text-[#A7B5C5] hover:text-[#00C995] hover:border-[#00C995]/50 transition-colors"
+                className="w-9 h-9 rounded-xl bg-white dark:bg-[#080F18] border border-slate-200 dark:border-white/[0.08] flex items-center justify-center text-slate-600 dark:text-[#A7B5C5] hover:text-[#00C995] dark:hover:text-[#00C995] hover:border-[#00C995]/50 transition-colors shadow-sm"
                 aria-label="Twitter"
               >
                 <Twitter className="w-4 h-4" />
@@ -49,7 +55,7 @@ export default function Footer() {
                 href="https://github.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-xl bg-[#080F18] border border-white/[0.08] flex items-center justify-center text-[#A7B5C5] hover:text-[#00C995] hover:border-[#00C995]/50 transition-colors"
+                className="w-9 h-9 rounded-xl bg-white dark:bg-[#080F18] border border-slate-200 dark:border-white/[0.08] flex items-center justify-center text-slate-600 dark:text-[#A7B5C5] hover:text-[#00C995] dark:hover:text-[#00C995] hover:border-[#00C995]/50 transition-colors shadow-sm"
                 aria-label="GitHub"
               >
                 <Github className="w-4 h-4" />
@@ -59,7 +65,7 @@ export default function Footer() {
 
           {/* 2. Quick Navigation */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-white font-bold mb-4">
+            <h4 className="text-xs font-mono uppercase tracking-wider text-slate-900 dark:text-white font-bold mb-4">
               Navigation
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
@@ -69,27 +75,22 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#projects" className="hover:text-[#00C995] transition-colors">
+                <Link href="/projects" className="hover:text-[#00C995] transition-colors">
                   Selected Work
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="hover:text-[#00C995] transition-colors">
+                <Link href="/services" className="hover:text-[#00C995] transition-colors">
                   Engineering Capabilities
                 </Link>
               </li>
               <li>
-                <Link href="#process" className="hover:text-[#00C995] transition-colors">
-                  Agile Process
-                </Link>
-              </li>
-              <li>
                 <Link href="/about" className="hover:text-[#00C995] transition-colors">
-                  About the Guild
+                  About Us
                 </Link>
               </li>
               <li>
-                <Link href="#contact" className="hover:text-[#00C995] transition-colors">
+                <Link href="/#contact" className="hover:text-[#00C995] transition-colors">
                   Initiate Project
                 </Link>
               </li>
@@ -98,37 +99,37 @@ export default function Footer() {
 
           {/* 3. Engineering Services */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-white font-bold mb-4">
+            <h4 className="text-xs font-mono uppercase tracking-wider text-slate-900 dark:text-white font-bold mb-4">
               Capabilities
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
-                <Link href="#services" className="hover:text-[#00C995] transition-colors">
+                <Link href="/services" className="hover:text-[#00C995] transition-colors">
                   Web Development
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="hover:text-[#00C995] transition-colors">
+                <Link href="/services" className="hover:text-[#00C995] transition-colors">
                   Application Engineering
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="hover:text-[#00C995] transition-colors">
+                <Link href="/services" className="hover:text-[#00C995] transition-colors">
                   E-Commerce Flagships
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="hover:text-[#00C995] transition-colors">
+                <Link href="/services" className="hover:text-[#00C995] transition-colors">
                   AI & Autonomous Systems
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="hover:text-[#00C995] transition-colors">
+                <Link href="/services" className="hover:text-[#00C995] transition-colors">
                   SEO & Performance CRO
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="hover:text-[#00C995] transition-colors">
+                <Link href="/services" className="hover:text-[#00C995] transition-colors">
                   UI/UX & Design Systems
                 </Link>
               </li>
@@ -137,23 +138,23 @@ export default function Footer() {
 
           {/* 4. Contact & Headquarters */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-white font-bold mb-4">
+            <h4 className="text-xs font-mono uppercase tracking-wider text-slate-900 dark:text-white font-bold mb-4">
               Headquarters
             </h4>
             <div className="space-y-3 text-xs leading-relaxed">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#00C995] shrink-0 mt-0.5" />
-                <span>
+                <span className="text-slate-600 dark:text-[#A7B5C5]">
                   Bengali Kothi Chowk, Haridwar Bypass Rd, Dehradun 248001, India
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#00C995] shrink-0" />
-                <a href="mailto:info@grandeurnet.com" className="hover:text-[#00C995] transition-colors">
+                <a href="mailto:info@grandeurnet.com" className="text-slate-600 dark:text-[#A7B5C5] hover:text-[#00C995] transition-colors">
                   info@grandeurnet.com
                 </a>
               </div>
-              <div className="pt-2 text-[#00E5A0] font-mono font-semibold">
+              <div className="pt-2 text-[#00A980] dark:text-[#00E5A0] font-mono font-semibold">
                 +91 91490 50623
               </div>
             </div>
@@ -161,18 +162,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar: Copyright & Compliance */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between text-xs text-[#A7B5C5]/70 gap-4">
+        <div className="pt-8 border-t border-slate-200 dark:border-white/[0.06] flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-[#A7B5C5]/70 gap-4">
           <div>
             © {new Date().getFullYear()} Grandeur Net. All rights reserved. 100% Client-Owned Intellectual Property.
           </div>
           <div className="flex gap-6 font-mono text-[11px]">
-            <Link href="#contact" className="hover:text-[#00C995] transition-colors">
+            <Link href="/#contact" className="hover:text-[#00C995] transition-colors">
               Non-Disclosure (NDA)
             </Link>
-            <Link href="#contact" className="hover:text-[#00C995] transition-colors">
+            <Link href="/#contact" className="hover:text-[#00C995] transition-colors">
               SLA Guarantees
             </Link>
-            <Link href="#contact" className="hover:text-[#00C995] transition-colors">
+            <Link href="/#contact" className="hover:text-[#00C995] transition-colors">
               Security Protocol
             </Link>
           </div>

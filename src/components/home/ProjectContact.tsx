@@ -63,7 +63,7 @@ export default function ProjectContact() {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 md:px-12 bg-[#080F18] relative">
+    <section id="contact" className="py-20 md:py-24 px-6 md:px-12 bg-[#050A0B] border-t border-white/[0.06] relative">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Heading & Introduction */}
         <div className="max-w-3xl space-y-3">

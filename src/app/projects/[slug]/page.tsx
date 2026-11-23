@@ -19,9 +19,14 @@ import {
   Database,
   Code2,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { PROJECTS, getProjectBySlug, getAllProjectSlugs } from "@/data/projects";
 import TechIcon from "@/components/TechIcon";
-import ProjectImageShowcase from "@/components/project/ProjectImageShowcase";
+
+const ProjectImageShowcase = dynamic(
+  () => import("@/components/project/ProjectImageShowcase"),
+  { ssr: true }
+);
 
 // Pre-render static paths for all projects
 export function generateStaticParams() {

@@ -54,19 +54,6 @@ function AnimatedCounter({ value, duration = 1.8 }: { value: string; duration?: 
   );
 }
 
-const MARQUEE_ITEMS = [
-  "NEXT.JS 15 ARCHITECTURE",
-  "HIGH-CONVERSION E-COMMERCE",
-  "AI & CLOUD AUTOMATIONS",
-  "HEADLESS PROPTECH PORTALS",
-  "SUB-80MS GLOBAL LATENCY",
-  "AWARD-WINNING UI/UX",
-  "POSTGRESQL & DRIZZLE ORM",
-  "TYPESCRIPT FIRST",
-  "REST & GRAPHQL APIS",
-  "STRIPE & RAZORPAY ECOSYSTEMS",
-];
-
 /* Grouped lines matching exact typography and line-breaks from reference 2.webp */
 const HEADLINE_LINES = [
   [
@@ -140,7 +127,7 @@ export default function Hero() {
   const [showreelOpen, setShowreelOpen] = useState(false);
 
   return (
-    <section className="relative min-h-[96vh] flex flex-col justify-between pt-32 sm:pt-36 pb-8 px-4 sm:px-6 md:px-12 overflow-hidden bg-brand-dark">
+    <section className="relative min-h-[96vh] flex flex-col justify-between pt-32 sm:pt-36 pb-16 md:pb-20 px-4 sm:px-6 md:px-12 overflow-hidden bg-brand-dark">
       {/* Background Lighting Gradients with Continuous Floating Drift */}
       <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] bg-brand-green/[0.08] rounded-full blur-[170px] pointer-events-none animate-float-slow" />
       <div className="absolute top-1/3 right-1/4 w-[550px] h-[550px] bg-brand-navy/70 rounded-full blur-[150px] pointer-events-none animate-float-reverse" />
@@ -378,68 +365,6 @@ export default function Hero() {
             })}
           </motion.div>
 
-        </div>
-      </div>
-
-      {/* =========================================
-          LUMINOUS FLOWING NEON WAVE RIBBON MESH
-          ========================================= */}
-      <div className="w-full relative mt-6 h-20 pointer-events-none overflow-hidden animate-wave-glow">
-        <svg
-          className="w-full h-full opacity-60"
-          viewBox="0 0 1440 80"
-          fill="none"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="neonWaveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#10b981" stopOpacity="0" />
-              <stop offset="30%" stopColor="#10b981" stopOpacity="0.8" />
-              <stop offset="60%" stopColor="#34d399" stopOpacity="0.9" />
-              <stop offset="85%" stopColor="#2dd4bf" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
-            </linearGradient>
-            <filter id="waveGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
-
-          {/* Undulating Wave Ribbons */}
-          <path
-            d="M0,40 C320,80 480,10 720,40 C960,70 1120,15 1440,35"
-            stroke="url(#neonWaveGrad)"
-            strokeWidth="2.5"
-            fill="none"
-            filter="url(#waveGlow)"
-          />
-          <path
-            d="M0,45 C280,15 520,70 800,30 C1080,-5 1260,65 1440,40"
-            stroke="url(#neonWaveGrad)"
-            strokeWidth="1.5"
-            strokeDasharray="6 4"
-            fill="none"
-            opacity="0.6"
-          />
-          <path
-            d="M0,50 C360,75 580,25 900,55 C1200,85 1320,25 1440,48"
-            stroke="url(#neonWaveGrad)"
-            strokeWidth="1"
-            fill="none"
-            opacity="0.35"
-          />
-        </svg>
-      </div>
-
-      {/* Infinite Kinetic Ticker Marquee */}
-      <div className="w-full py-3 bg-brand-surface/40 border-y border-white/[0.06] overflow-hidden relative">
-        <div className="animate-marquee flex gap-8 items-center text-xs font-mono tracking-widest text-slate-400">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-8 shrink-0">
-              <span className="hover:text-brand-green transition-colors">{item}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-green/60" />
-            </div>
-          ))}
         </div>
       </div>
 

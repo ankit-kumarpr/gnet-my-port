@@ -145,22 +145,6 @@ body {
   pointer-events: none;
 }
 
-/* Infinite Marquee Ticker */
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 30s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
 /* Badge glow */
 .badge-gradient {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(10, 25, 47, 0.7) 100%);
@@ -253,20 +237,6 @@ body {
   background-size: 50px 50px;
   mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
   -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
-}
-
-/* Luminous Neon Wave undulation */
-@keyframes wave-undulate {
-  0%, 100% {
-    transform: scaleY(1) translateY(0);
-  }
-  50% {
-    transform: scaleY(1.15) translateY(-6px);
-  }
-}
-
-.animate-wave-glow {
-  animation: wave-undulate 8s ease-in-out infinite;
 }
 
 

@@ -8,6 +8,8 @@ export type TechName =
   | "tailwind"
   | "shopify"
   | "wordpress"
+  | "woocommerce"
+  | "mongodb"
   | "laravel"
   | "postgresql"
   | "threejs"
@@ -96,6 +98,30 @@ export const TECH_ICONS: Record<string, { label: string; svg: (size: number) => 
           fillOpacity="0.12"
         />
         <path d="M12 9C10.5 9 10 10.2 10 11.2C10 13 14 13.5 14 15.5C14 16.8 12.8 17.5 11.5 17.5C10 17.5 9 16.8 9 16.8" stroke="#95BF47" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  woocommerce: {
+    label: "WooCommerce",
+    svg: (s) => (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill="none">
+        <rect x="2.5" y="4.5" width="19" height="15" rx="3.5" stroke="#96588A" strokeWidth="1.5" fill="#96588A" fillOpacity="0.12" />
+        <path d="M6 9.5C6.5 12 7.5 14.5 9 14.5C10.5 14.5 11 12.5 12 10C13 12.5 13.5 14.5 15 14.5C16.5 14.5 17.5 12 18 9.5" stroke="#96588A" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  mongodb: {
+    label: "MongoDB",
+    svg: (s) => (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 2C12 2 6 8.5 6 13.5C6 17.2 8.5 20.5 12 22C15.5 20.5 18 17.2 18 13.5C18 8.5 12 2 12 2Z"
+          stroke="#47A248"
+          strokeWidth="1.5"
+          fill="#47A248"
+          fillOpacity="0.12"
+        />
+        <path d="M12 2V22" stroke="#47A248" strokeWidth="1.3" />
       </svg>
     ),
   },

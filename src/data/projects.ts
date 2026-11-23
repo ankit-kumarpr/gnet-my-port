@@ -32,6 +32,18 @@ export interface ProcessPhase {
   deliverables: string[];
 }
 
+export interface ProjectFeature {
+  title: string;
+  description: string;
+}
+
+export interface ProjectProcessStep {
+  step: string;
+  phase: string;
+  title: string;
+  description: string;
+}
+
 export type ProjectCategory = "ecommerce" | "web-app" | "saas" | "proptech" | "ai";
 
 export interface Project {
@@ -42,6 +54,13 @@ export interface Project {
   category: ProjectCategory;
   categoryLabel: string;
   shortDescription: string;
+  projectType: string;
+  overview: string;
+  estimatedCost: string;
+  duration: string;
+  features: ProjectFeature[];
+  processSteps: ProjectProcessStep[];
+  liveUrl?: string;
   techStack: string[];
   deliveryDays: string;
   sprints: number;
@@ -72,6 +91,33 @@ export interface Project {
   };
 }
 
+const DEFAULT_PROCESS_STEPS: ProjectProcessStep[] = [
+  {
+    step: "01",
+    phase: "Planning & Discovery",
+    title: "Requirements, Business Goals & Scope",
+    description: "In-depth technical discovery to understand architectural requirements, user personas, operational constraints, and commercial milestones.",
+  },
+  {
+    step: "02",
+    phase: "UI/UX & Design",
+    title: "Interface, Visual Identity & Prototypes",
+    description: "Crafting a bespoke design system, fluid interactive prototypes, and high-fidelity responsive layouts focused on user conversion.",
+  },
+  {
+    step: "03",
+    phase: "Development",
+    title: "Full-Stack Engineering & System Integrations",
+    description: "Developing robust frontends, resilient API microservices, distributed data schemas, and seamless third-party gateway connections.",
+  },
+  {
+    step: "04",
+    phase: "Testing & Delivery",
+    title: "Performance Audits, Security & Global Launch",
+    description: "End-to-end regression testing, Core Web Vitals optimization, automated CI/CD pipeline deployment, and zero-downtime production cutover.",
+  },
+];
+
 export const PROJECTS: Project[] = [
   {
     id: "kraftwoods",
@@ -81,6 +127,34 @@ export const PROJECTS: Project[] = [
     category: "ecommerce",
     categoryLabel: "E-Commerce",
     shortDescription: "Bespoke direct-to-consumer digital flagship featuring interactive 3D furniture customizers and frictionless checkout.",
+    projectType: "E-Commerce Flagship & 3D WebGL Configurator",
+    overview: "KraftWoods is a premium direct-to-consumer flagship engineered for an artisan luxury furniture manufacturer. We built an interactive 3D product visualizer running at 60fps in WebGL, sub-second server-side rendered catalog filtering, and a streamlined one-page checkout that lifts conversion rates while preserving an editorial brand feel.",
+    estimatedCost: "₹3,40,000 (Estimated Project Value)",
+    duration: "16 Days",
+    features: [
+      {
+        title: "Interactive 3D WebGL Configurator",
+        description: "60fps real-time 3D models allowing customers to inspect grain textures, rotate 360°, and swap teak and walnut finishes seamlessly.",
+      },
+      {
+        title: "Dynamic Sizing & Price Recalculation",
+        description: "Instant geometric dimension customizer that recalculates lumber consumption and updates quotation values in real time.",
+      },
+      {
+        title: "Frictionless One-Page Checkout Funnel",
+        description: "Accordion checkout integrating Razorpay and Stripe with automated PIN-code courier feasibility and credit EMI options.",
+      },
+      {
+        title: "ERP & Showroom Stock Sync",
+        description: "Automated two-way inventory pipeline keeping physical showroom stock aligned with online SKU availability.",
+      },
+      {
+        title: "Sub-300ms Category Filtering",
+        description: "Edge-rendered catalog navigation enabling sub-second search across 4,500+ furniture variations with zero layout shift.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://kraftwoods.com",
     techStack: ["nextjs", "threejs", "shopify", "tailwind", "stripe"],
     deliveryDays: "16 Days",
     sprints: 3,
@@ -174,6 +248,34 @@ export const PROJECTS: Project[] = [
     category: "web-app",
     categoryLabel: "Web Applications",
     shortDescription: "Telehealth clinical operations platform providing real-time patient triage, encrypted medical records, and physician scheduling.",
+    projectType: "Clinical Healthcare Portal & Telemedicine SaaS",
+    overview: "Meridian Health is a mission-critical clinical operations and pathology platform connecting laboratory hardware directly to patients and physicians. It automates report parsing, generates encrypted PDF documents on edge workers, and delivers instant SMS notifications while maintaining complete HIPAA compliance.",
+    estimatedCost: "₹4,20,000 (Estimated Project Value)",
+    duration: "19 Days",
+    features: [
+      {
+        title: "Automated Laboratory Analyzer Ingestion",
+        description: "Sub-second HL7/ASTM daemon parsing laboratory blood and pathology analyzer streams directly into secure medical records.",
+      },
+      {
+        title: "Edge Cryptographic PDF Report Generator",
+        description: "Watermarked, tamper-evident lab diagnostics compiled on edge workers in under 350ms with verification QR signatures.",
+      },
+      {
+        title: "AES-256 Encrypted Patient Records Vault",
+        description: "HIPAA-grade storage architecture with fine-grained access control and comprehensive doctor audit trails.",
+      },
+      {
+        title: "One-Click Tokenized SMS Report Delivery",
+        description: "Expiring single-use secure links sent to patient devices, eliminating paper reports and manual pickup delays.",
+      },
+      {
+        title: "WebRTC Telemedicine Video Room",
+        description: "Zero-install peer-to-peer clinical consultation rooms with digital prescription drafting and real-time waiting lists.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://meridianhealth.example.com",
     techStack: ["react", "nextjs", "typescript", "postgresql", "aws"],
     deliveryDays: "19 Days",
     sprints: 4,
@@ -267,6 +369,34 @@ export const PROJECTS: Project[] = [
     category: "saas",
     categoryLabel: "Software & SaaS",
     shortDescription: "Cloud-native ERP and dispatch console tracking real-time route telemetry, fuel expenditure, and autonomous driver billing.",
+    projectType: "Enterprise Telematics ERP & Fleet Dispatch Console",
+    overview: "FleetPilot is a cloud-native ERP and route dispatch engine managing 2,400+ active commercial transport vehicles across national logistics corridors. We engineered real-time GPS waypoint clustering, automated fuel surcharge reconciliation, and digital proof-of-delivery payout triggers that reduce transport overhead.",
+    estimatedCost: "₹5,10,000 (Estimated Project Value)",
+    duration: "21 Days",
+    features: [
+      {
+        title: "High-Frequency Route Telemetry Stream",
+        description: "Kafka-driven ingestion pipeline handling 10M+ daily GPS coordinates without lag or packet drops.",
+      },
+      {
+        title: "60fps WebGL Fleet Operations Console",
+        description: "Smooth pan and zoom across multi-state transit routes with real-time speed, fuel, and tripwire alerts.",
+      },
+      {
+        title: "Autonomous Driver Payout Settlement",
+        description: "Digital signature proof-of-delivery triggers automated ACH and bank disbursements with tax reconciliation.",
+      },
+      {
+        title: "Predictive Fuel & Maintenance Alarms",
+        description: "Machine intelligence models analyzing engine telemetry to predict component wear and optimal refueling stops.",
+      },
+      {
+        title: "Multi-Hub Containerized Architecture",
+        description: "Docker microservices deployed across regional edge nodes providing sub-150ms operational response times.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://fleetpilot.example.com",
     techStack: ["react", "nodejs", "typescript", "postgresql", "docker"],
     deliveryDays: "21 Days",
     sprints: 4,
@@ -355,6 +485,34 @@ export const PROJECTS: Project[] = [
     category: "web-app",
     categoryLabel: "Web Applications",
     shortDescription: "High-throughput transit booking engine with interactive 60fps seat selectors, automated GST billing, and live GPS tracking.",
+    projectType: "High-Throughput Transit Booking Engine",
+    overview: "GT Travels is a high-concurrency passenger reservation system handling 10,000+ daily bookings across inter-city luxury bus routes. We built real-time interactive seat floorplans, ephemeral Redis seat-hold state machines, automated GST invoice compliance, and driver telemetry maps that eliminate overbooking completely.",
+    estimatedCost: "₹3,80,000 (Estimated Project Value)",
+    duration: "18 Days",
+    features: [
+      {
+        title: "Interactive 60fps Bus Floorplan Selector",
+        description: "Touch-optimized SVG bus seat layout showing real-time occupancy, sleeper berths, and seat categories with instant feedback.",
+      },
+      {
+        title: "Distributed Ephemeral Seat-Hold Locks",
+        description: "Redis TTL keys with row-level database locks protecting selected seats during the 5-minute checkout window.",
+      },
+      {
+        title: "Automated GST Invoicing & WhatsApp Boarding Passes",
+        description: "Instant tax-compliant receipt generation and automated ticket delivery with scannable QR codes directly to passenger WhatsApp.",
+      },
+      {
+        title: "Live GPS Bus Tracking & ETA Engine",
+        description: "Vehicle coordinates ingested every 5 seconds to provide passengers with realistic stop arrival estimates.",
+      },
+      {
+        title: "Idempotent Razorpay Webhook Gateway",
+        description: "Resilient payment webhook architecture ensuring zero duplicate debits or unconfirmed bookings during network drops.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://gttravels.example.com",
     techStack: ["nextjs", "typescript", "redis", "postgresql", "tailwind"],
     deliveryDays: "18 Days",
     sprints: 3,
@@ -448,6 +606,34 @@ export const PROJECTS: Project[] = [
     category: "proptech",
     categoryLabel: "PropTech",
     shortDescription: "Geospatial property discovery portal with 360° virtual tours, interactive master plans, and automated CRM lead routing.",
+    projectType: "Geospatial Real Estate Discovery & 360° Tours",
+    overview: "Northwind Luxury Estates is an interactive geospatial real estate portal engineered for premier residential and commercial developments. Featuring Mapbox GL satellite vector maps, 360° panoramic virtual walkthroughs, and automated instant lead distribution to sales executives via WhatsApp Cloud API.",
+    estimatedCost: "₹2,90,000 (Estimated Project Value)",
+    duration: "14 Days",
+    features: [
+      {
+        title: "Mapbox GL Geospatial Vector Clustering",
+        description: "High-density satellite map clustering with live price pins, boundary polygons, and neighborhood infrastructure radiuses.",
+      },
+      {
+        title: "360° Panoramic Virtual Tours",
+        description: "WebGL panoramic viewer enabling prospective buyers to navigate estate interiors and scenic mountain views on any device.",
+      },
+      {
+        title: "15-Second Automated WhatsApp CRM Dispatch",
+        description: "Instant lead capture that automatically assigns verified buyer contacts to sales consultants with custom brochures.",
+      },
+      {
+        title: "Interactive Mortgage & EMI Amortization",
+        description: "Flexible financing calculators providing down payment, tenure adjustments, and downloadable repayment schedules.",
+      },
+      {
+        title: "Verified RERA Document Vault",
+        description: "Gated download center providing verified government compliance certificates and architectural floorplans.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://northwindrealty.example.com",
     techStack: ["react", "nextjs", "supabase", "tailwind", "threejs"],
     deliveryDays: "14 Days",
     sprints: 3,
@@ -536,6 +722,34 @@ export const PROJECTS: Project[] = [
     category: "ai",
     categoryLabel: "AI & Automation",
     shortDescription: "Autonomous document intelligence platform parsing complex technical RFPs with vector embeddings and multi-agent drafting.",
+    projectType: "Autonomous AI Document Intelligence Platform",
+    overview: "Apex AI is an autonomous document intelligence and proposal generation platform developed for enterprise IT consulting firms. Powered by FastAPI, pgvector semantic search, and domain-tuned LLM agents, it extracts technical requirements from 100+ page solicitation PDFs and drafts compliant technical answers in minutes.",
+    estimatedCost: "₹4,60,000 (Estimated Project Value)",
+    duration: "12 Days",
+    features: [
+      {
+        title: "Multi-Modal Solicitation PDF Parsing",
+        description: "Intelligent document ingestion pipeline processing complex tables, technical specifications, and legal checklists.",
+      },
+      {
+        title: "pgvector Semantic Architecture",
+        description: "Sub-50ms vector similarity matching querying past winning enterprise bids to provide contextually grounded proposal citations.",
+      },
+      {
+        title: "Autonomous Multi-Agent Technical Drafting",
+        description: "Collaborative agent loop with dedicated validation agents ensuring 100% compliance with client solicitation matrices.",
+      },
+      {
+        title: "Split-Screen Interactive Proposal Editor",
+        description: "Next.js 14 review environment providing synchronized source document citations alongside generated draft chapters.",
+      },
+      {
+        title: "SOC2 Zero-Data-Retention Vault",
+        description: "Cryptographic privacy layer guaranteeing sensitive government and corporate proposal data is never used for training.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://apexai.example.com",
     techStack: ["python", "nextjs", "typescript", "postgresql", "docker"],
     deliveryDays: "12 Days",
     sprints: 2,
@@ -624,6 +838,34 @@ export const PROJECTS: Project[] = [
     category: "saas",
     categoryLabel: "Software & SaaS",
     shortDescription: "Real-time vector design workspace with infinite multiplayer canvases, automated asset versioning, and token export.",
+    projectType: "Real-Time Collaborative WebGL Design Workspace",
+    overview: "Kanvas Studio is a GPU-accelerated multiplayer vector canvas engineered for creative agencies and product designers. Powered by WebGL shaders and Yjs CRDT synchronization, it supports sub-16ms synchronous multi-user editing with automatic design token code generation for Tailwind CSS.",
+    estimatedCost: "₹4,90,000 (Estimated Project Value)",
+    duration: "17 Days",
+    features: [
+      {
+        title: "Conflict-Free Replicated State Engine (CRDT)",
+        description: "Yjs synchronization across WebSockets guaranteeing simultaneous multi-user canvas updates without conflict locks.",
+      },
+      {
+        title: "Hardware-Accelerated WebGL Vector Canvas",
+        description: "Smooth 120fps GPU rendering loop handling thousands of complex vector paths, gradient fills, and boolean masks.",
+      },
+      {
+        title: "Live Multiplayer Presence & Cursors",
+        description: "Sub-20ms remote pointer positions, selection halos, and live user viewports rendered with zero frame stutter.",
+      },
+      {
+        title: "Automated Tailwind & CSS Token Exporter",
+        description: "One-click compilation transforming canvas typography scales and color themes into production-ready Tailwind configs.",
+      },
+      {
+        title: "Local-First Offline State Persistence",
+        description: "IndexedDB caching enabling seamless offline editing and graceful background synchronization on reconnect.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://kanvasstudio.example.com",
     techStack: ["react", "typescript", "graphql", "threejs", "tailwind"],
     deliveryDays: "17 Days",
     sprints: 3,
@@ -712,6 +954,34 @@ export const PROJECTS: Project[] = [
     category: "web-app",
     categoryLabel: "Web Applications",
     shortDescription: "High-performance conditioning platform with biometric sensor synchronization, video coaching, and dynamic workout plans.",
+    projectType: "Biometric Conditioning & Fitness Application",
+    overview: "Helios is an athletic training application combining real-time Bluetooth heart rate telemetry with personalized progressive overload algorithms and HLS video coaching streams. The platform serves 18,000+ athletes with offline-capable workout tracking and multi-tier Stripe subscription billing.",
+    estimatedCost: "₹3,60,000 (Estimated Project Value)",
+    duration: "15 Days",
+    features: [
+      {
+        title: "Web Bluetooth Heart-Rate Sensor Sync",
+        description: "Zero-latency Bluetooth pairing with smart chest straps and wearable sensors with automatic reconnection logic.",
+      },
+      {
+        title: "Dynamic Progressive Overload Algorithm",
+        description: "Calculates daily training volumes and recovery scores based on resting heart rate and historical set intensity.",
+      },
+      {
+        title: "Adaptive Bitrate HLS Video Player",
+        description: "Sub-second buffer start times delivering crystal-clear exercise demonstrations on cellular and Wi-Fi networks.",
+      },
+      {
+        title: "Real-Time Supabase Leaderboards",
+        description: "Live athlete challenge sync motivating member engagement with social proof and instant ranking updates.",
+      },
+      {
+        title: "Multi-Tier Member Subscription Gateway",
+        description: "Integrated Stripe billing with automated recurring memberships, grace periods, and instant Apple Pay support.",
+      },
+    ],
+    processSteps: DEFAULT_PROCESS_STEPS,
+    liveUrl: "https://heliosperformance.example.com",
     techStack: ["react", "typescript", "nodejs", "supabase", "stripe"],
     deliveryDays: "15 Days",
     sprints: 3,

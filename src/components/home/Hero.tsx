@@ -149,21 +149,6 @@ export default function Hero() {
         {/* HUD Frame Outer Box */}
         <div className="relative p-6 sm:p-10 lg:p-12 rounded-3xl glass-card border border-white/[0.08] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] hud-corner transition-all duration-500 hover:border-brand-green/30">
 
-          {/* Top HUD Technical Specs Line */}
-          <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/[0.06] text-[11px] font-mono tracking-widest uppercase text-slate-400">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-brand-green animate-radar" />
-              <span className="text-white font-semibold">GRANDEUR NET // DEHRADUN LABS</span>
-            </div>
-            <div className="flex items-center gap-4 text-brand-muted">
-              <span className="hidden sm:inline">LOC: 30.3165° N, 78.0322° E</span>
-              <span className="flex items-center gap-1.5 text-brand-green font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse" />
-                SYS: ONLINE
-              </span>
-            </div>
-          </div>
-
           {/* 2-COLUMN HERO BODY: Text on Left, Tech Globe on Right */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
 

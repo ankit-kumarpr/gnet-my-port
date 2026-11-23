@@ -8,9 +8,20 @@ import {
   Clock,
   CreditCard,
   ExternalLink,
+  CheckCircle2,
+  Sparkles,
+  Layers,
+  Cpu,
+  ShieldCheck,
+  Activity,
+  Zap,
+  Globe,
+  Database,
+  Code2,
 } from "lucide-react";
 import { PROJECTS, getProjectBySlug, getAllProjectSlugs } from "@/data/projects";
 import TechIcon from "@/components/TechIcon";
+import ProjectImageShowcase from "@/components/project/ProjectImageShowcase";
 
 // Pre-render static paths for all projects
 export function generateStaticParams() {
@@ -42,6 +53,9 @@ export function generateMetadata({
   };
 }
 
+// Feature icons lookup map
+const FEATURE_ICONS = [Sparkles, Cpu, Layers, ShieldCheck, Zap, Activity];
+
 export default function ProjectDetailPage({
   params,
 }: {
@@ -61,17 +75,17 @@ export default function ProjectDetailPage({
 
   return (
     <div className="min-h-screen bg-[#050A0B] text-[#F5F8FA] selection:bg-[#00D6A0] selection:text-[#050A0B]">
-      {/* Top Ambient Light Glow */}
+      {/* Top Ambient Glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] rounded-full blur-[200px] pointer-events-none opacity-15"
         style={{ backgroundColor: project.accentColor || "#00D6A0" }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 pt-28 pb-24 space-y-16 sm:space-y-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 pt-28 pb-24 space-y-16 sm:space-y-24">
         {/* ------------------------------------------------------------------ */}
-        {/* SECTION A: BREADCRUMB & HERO                                       */}
+        {/* 1. PRESERVED HERO SECTION: BREADCRUMB, HEADLINE & HERO IMAGE       */}
         {/* ------------------------------------------------------------------ */}
-        <div className="space-y-8">
+        <section className="space-y-8">
           {/* Breadcrumb Navigation */}
           <nav
             aria-label="Breadcrumb"
@@ -126,7 +140,7 @@ export default function ProjectDetailPage({
             </p>
           </div>
 
-          {/* Primary High-Resolution Preview Image */}
+          {/* Primary High-Resolution Hero Visual */}
           <div className="relative w-full aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0C1721] border border-white/[0.08] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -136,14 +150,14 @@ export default function ProjectDetailPage({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050A0B]/60 via-transparent to-transparent pointer-events-none" />
 
-            {/* Live Link Button Overlay if available */}
+            {/* Live Demo Link Button Overlay */}
             {project.liveUrl && (
               <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6">
                 <a
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2.5 rounded-xl bg-[#050A0B]/85 hover:bg-[#050A0B] border border-white/[0.15] hover:border-[#00D6A0]/60 text-[#F5F8FA] hover:text-[#00D6A0] text-xs font-mono font-medium backdrop-blur-md flex items-center gap-2 transition-all shadow-lg"
+                  className="px-4 py-2.5 rounded-xl bg-[#050A0B]/85 hover:bg-[#050A0B] border border-white/[0.15] hover:border-[#00D6A0]/60 text-[#F5F8FA] hover:text-[#00D6A0] text-xs font-mono font-medium backdrop-blur-md flex items-center gap-2 transition-all shadow-lg cursor-pointer"
                 >
                   <span>Visit Live Demo</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -151,62 +165,80 @@ export default function ProjectDetailPage({
               </div>
             )}
           </div>
-        </div>
+        </section>
 
         {/* ------------------------------------------------------------------ */}
-        {/* SECTION B & F: PROJECT OVERVIEW, ESTIMATED COST & TIMELINE         */}
+        {/* 2. INTERACTIVE PROJECT IMAGE SHOWCASE (FEATURED + THUMBNAIL SLIDER) */}
         {/* ------------------------------------------------------------------ */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4 border-t border-white/[0.08]">
+        {project.gallery && project.gallery.length > 0 && (
+          <section className="space-y-4 pt-2">
+            <ProjectImageShowcase
+              gallery={project.gallery}
+              projectTitle={project.title}
+              accentColor={project.accentColor}
+            />
+          </section>
+        )}
+
+        {/* ------------------------------------------------------------------ */}
+        {/* 3. PROJECT OVERVIEW & SPECIFICATIONS GRID                          */}
+        {/* ------------------------------------------------------------------ */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6 border-t border-white/[0.08]">
           {/* Narrative Overview */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-5">
             <div className="text-xs font-mono uppercase tracking-widest text-[#00D6A0] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0]" />
               <span>PROJECT OVERVIEW</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F8FA] tracking-tight">
-              Engineering Context & Solution
+              Engineering Context & Business Solution
             </h2>
 
             <p className="text-sm sm:text-base text-[#A5B2C0] leading-relaxed">
               {project.overview}
             </p>
 
-            <div className="p-4 rounded-xl bg-[#0C1721] border border-white/[0.06] text-sm text-[#A5B2C0] leading-relaxed">
-              <span className="text-[#F5F8FA] font-medium">Core Objective: </span>
-              {project.description.lead}{" "}
-              <strong className="text-[#00D6A0] font-semibold">
-                {project.description.highlight}
-              </strong>{" "}
-              {project.description.tail}
+            <div className="p-5 rounded-2xl bg-[#0C1721] border border-white/[0.08] text-sm text-[#A5B2C0] leading-relaxed space-y-2">
+              <div className="text-xs font-mono text-[#00D6A0] uppercase font-bold tracking-wider">
+                Strategic Mission
+              </div>
+              <p>
+                {project.description.lead}{" "}
+                <strong className="text-[#00D6A0] font-semibold">
+                  {project.description.highlight}
+                </strong>{" "}
+                {project.description.tail}
+              </p>
             </div>
           </div>
 
-          {/* Project Cost & Timeline Metadata Box */}
+          {/* Project Specifications & Deliverables Box */}
           <div className="rounded-2xl bg-[#0C1721] border border-white/[0.08] p-6 space-y-5 h-fit shadow-md">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-[#A5B2C0] font-bold pb-2 border-b border-white/[0.08]">
-              Project Specifications
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#A5B2C0] font-bold pb-2 border-b border-white/[0.08] flex items-center justify-between">
+              <span>Project Specifications</span>
+              <span className="text-[10px] text-[#00D6A0]">VERIFIED</span>
             </h3>
 
-            {/* Estimated Cost */}
+            {/* Estimated Value in INR */}
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-xs font-mono text-[#A5B2C0]">
                 <CreditCard className="w-3.5 h-3.5 text-[#00D6A0]" />
-                <span>Estimated Cost</span>
+                <span>Estimated Project Value</span>
               </div>
               <div className="text-xl sm:text-2xl font-extrabold text-[#F5F8FA] tracking-tight">
                 {project.estimatedCost}
               </div>
               <div className="text-[11px] font-mono text-[#A5B2C0]/70">
-                Transparent milestone-based billing
+                Transparent milestone-based delivery
               </div>
             </div>
 
-            {/* Timeline / Duration */}
+            {/* Timeline */}
             <div className="space-y-1 pt-3 border-t border-white/[0.06]">
               <div className="flex items-center gap-2 text-xs font-mono text-[#A5B2C0]">
                 <Clock className="w-3.5 h-3.5 text-[#00D6A0]" />
-                <span>Timeline & Sprints</span>
+                <span>Development Duration</span>
               </div>
               <div className="text-xl sm:text-2xl font-extrabold text-[#00D6A0]">
                 {project.duration}
@@ -216,24 +248,128 @@ export default function ProjectDetailPage({
               </div>
             </div>
 
-            {/* Client / Organization */}
+            {/* Category / Industry */}
             <div className="space-y-1 pt-3 border-t border-white/[0.06]">
-              <div className="text-xs font-mono text-[#A5B2C0]">Industry / Type</div>
+              <div className="text-xs font-mono text-[#A5B2C0]">Category & Type</div>
               <div className="text-sm font-semibold text-[#F5F8FA]">
                 {project.projectType}
               </div>
             </div>
+
+            {/* Main Deliverables Checklist */}
+            {project.deliverables && project.deliverables.length > 0 && (
+              <div className="space-y-2 pt-3 border-t border-white/[0.06]">
+                <div className="text-xs font-mono text-[#A5B2C0] font-medium">
+                  Main Deliverables:
+                </div>
+                <ul className="space-y-1.5">
+                  {project.deliverables.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-xs text-[#F5F8FA]/90">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#00D6A0] shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </section>
 
         {/* ------------------------------------------------------------------ */}
-        {/* SECTION C: TECHNOLOGIES USED                                       */}
+        {/* 4. SECOND VISUAL SHOWCASE: EDITORIAL ALTERNATING STORIES           */}
         {/* ------------------------------------------------------------------ */}
-        <section className="space-y-6 pt-4 border-t border-white/[0.08]">
+        {project.visualShowcases && project.visualShowcases.length > 0 && (
+          <section className="space-y-12 pt-6 border-t border-white/[0.08]">
+            <div className="space-y-2 max-w-2xl">
+              <div className="text-xs font-mono uppercase tracking-widest text-[#00D6A0] flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0]" />
+                <span>DEEP DIVE / VISUAL ARCHITECTURE</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F8FA] tracking-tight">
+                Interface Architecture & Core Systems
+              </h2>
+              <p className="text-sm text-[#A5B2C0]">
+                Explore how high-performance visual design and reliable engineering mechanisms combine to solve complex user workflows.
+              </p>
+            </div>
+
+            {/* Alternating Editorial Rows */}
+            <div className="space-y-16 sm:space-y-20">
+              {project.visualShowcases.map((showcase, index) => {
+                const isEven = index % 2 === 0;
+                return (
+                  <div
+                    key={index}
+                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center ${
+                      isEven ? "" : "lg:flex-row-reverse"
+                    }`}
+                  >
+                    {/* Visual Asset (7 cols) */}
+                    <div
+                      className={`lg:col-span-7 ${
+                        isEven ? "lg:order-1" : "lg:order-2"
+                      }`}
+                    >
+                      <div className="relative w-full aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0C1721] border border-white/[0.08] shadow-[0_15px_40px_-10px_rgba(0,0,0,0.7)] group">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={showcase.image}
+                          alt={showcase.title}
+                          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-500 ease-out"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050A0B]/60 via-transparent to-transparent pointer-events-none" />
+                      </div>
+                    </div>
+
+                    {/* Editorial Content (5 cols) */}
+                    <div
+                      className={`lg:col-span-5 space-y-4 ${
+                        isEven ? "lg:order-2" : "lg:order-1"
+                      }`}
+                    >
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0C1721] border border-[#00D6A0]/40 text-[#00D6A0] text-xs font-mono font-medium">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0]" />
+                        <span>{showcase.category}</span>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl font-bold text-[#F5F8FA] tracking-tight">
+                        {showcase.title}
+                      </h3>
+
+                      <p className="text-sm text-[#A5B2C0] leading-relaxed">
+                        {showcase.description}
+                      </p>
+
+                      {/* Technical Highlights Badges */}
+                      {showcase.highlights && showcase.highlights.length > 0 && (
+                        <div className="pt-2 flex flex-wrap gap-2">
+                          {showcase.highlights.map((h, i) => (
+                            <span
+                              key={i}
+                              className="px-2.5 py-1 rounded-md bg-[#0C1721] border border-white/[0.08] text-xs font-mono text-[#F5F8FA] font-medium"
+                            >
+                              ✓ {h}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* ------------------------------------------------------------------ */}
+        {/* 5. TECHNOLOGIES USED (CLEAN HORIZONTAL SHOWCASE WITH REAL ICONS)   */}
+        {/* ------------------------------------------------------------------ */}
+        <section className="space-y-6 pt-6 border-t border-white/[0.08]">
           <div className="space-y-2">
             <div className="text-xs font-mono uppercase tracking-widest text-[#00D6A0] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0]" />
-              <span>STACK & TOOLS</span>
+              <span>STACK & INFRASTRUCTURE</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F8FA] tracking-tight">
               Technologies Used
@@ -266,9 +402,9 @@ export default function ProjectDetailPage({
         </section>
 
         {/* ------------------------------------------------------------------ */}
-        {/* SECTION D: PROJECT FEATURES & ARCHITECTURAL SOLUTIONS              */}
+        {/* 6. KEY FEATURES & FUNCTIONALITIES                                  */}
         {/* ------------------------------------------------------------------ */}
-        <section className="space-y-6 pt-4 border-t border-white/[0.08]">
+        <section className="space-y-6 pt-6 border-t border-white/[0.08]">
           <div className="space-y-2">
             <div className="text-xs font-mono uppercase tracking-widest text-[#00D6A0] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0]" />
@@ -283,42 +419,47 @@ export default function ProjectDetailPage({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-            {project.features.map((feature, idx) => (
-              <div
-                key={idx}
-                className="p-5 sm:p-6 rounded-2xl bg-[#0C1721] border border-white/[0.08] hover:border-[#00D6A0]/40 transition-colors space-y-2 group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="w-6 h-6 rounded-md bg-[#00D6A0]/10 text-[#00D6A0] text-xs font-mono font-bold flex items-center justify-center shrink-0">
-                    {idx + 1}
-                  </span>
-                  <h3 className="text-base font-bold text-[#F5F8FA] group-hover:text-[#00D6A0] transition-colors">
-                    {feature.title}
-                  </h3>
+            {project.features.map((feature, idx) => {
+              const IconComponent = FEATURE_ICONS[idx % FEATURE_ICONS.length];
+              return (
+                <div
+                  key={idx}
+                  className="p-5 sm:p-6 rounded-2xl bg-[#0C1721] border border-white/[0.08] hover:border-[#00D6A0]/40 transition-colors space-y-2 group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded-lg bg-[#00D6A0]/10 border border-[#00D6A0]/30 text-[#00D6A0] flex items-center justify-center shrink-0">
+                      <IconComponent className="w-3.5 h-3.5" />
+                    </div>
+                    <h3 className="text-base font-bold text-[#F5F8FA] group-hover:text-[#00D6A0] transition-colors">
+                      {feature.title}
+                    </h3>
+                  </div>
+                  <p className="text-xs sm:text-sm text-[#A5B2C0] leading-relaxed pl-10">
+                    {feature.description}
+                  </p>
                 </div>
-                <p className="text-xs sm:text-sm text-[#A5B2C0] leading-relaxed pl-8.5">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
         {/* ------------------------------------------------------------------ */}
-        {/* SECTION E: 4-STEP DEVELOPMENT PROCESS                              */}
+        {/* 7. COMPACT DEVELOPMENT PROCESS TIMELINE                            */}
         {/* ------------------------------------------------------------------ */}
-        <section className="space-y-6 pt-4 border-t border-white/[0.08]">
-          <div className="space-y-2">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#00D6A0] flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0]" />
-              <span>EXECUTION ROADMAP</span>
+        <section className="space-y-6 pt-6 border-t border-white/[0.08]">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+            <div className="space-y-2">
+              <div className="text-xs font-mono uppercase tracking-widest text-[#00D6A0] flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0]" />
+                <span>EXECUTION ROADMAP</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F8FA] tracking-tight">
+                Development Process
+              </h2>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F8FA] tracking-tight">
-              Development Process
-            </h2>
-            <p className="text-sm text-[#A5B2C0]">
-              From technical discovery to global production cutover, every sprint follows a structured milestone delivery model.
-            </p>
+            <div className="text-xs font-mono text-[#00D6A0] bg-[#0C1721] px-3.5 py-1.5 rounded-full border border-[#00D6A0]/30 w-fit">
+              Completed in {project.duration} ({project.sprints} Sprints)
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -351,7 +492,7 @@ export default function ProjectDetailPage({
         </section>
 
         {/* ------------------------------------------------------------------ */}
-        {/* SECTION G: PREV / NEXT PROJECT NAVIGATION                          */}
+        {/* 8. PREV / NEXT PROJECT NAVIGATION                                  */}
         {/* ------------------------------------------------------------------ */}
         <div className="pt-10 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Link
@@ -392,7 +533,7 @@ export default function ProjectDetailPage({
         </div>
 
         {/* ------------------------------------------------------------------ */}
-        {/* FINAL CALL TO ACTION                                               */}
+        {/* 9. DISCOVERY CALL CALL TO ACTION                                   */}
         {/* ------------------------------------------------------------------ */}
         <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#0C1721] via-[#070D14] to-[#0C1721] border border-[#00D6A0]/30 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">

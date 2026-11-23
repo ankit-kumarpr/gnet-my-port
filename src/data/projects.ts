@@ -44,6 +44,22 @@ export interface ProjectProcessStep {
   description: string;
 }
 
+export interface ProjectGalleryItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  tag: string;
+}
+
+export interface VisualShowcaseItem {
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  highlights: string[];
+}
+
 export type ProjectCategory = "ecommerce" | "web-app" | "saas" | "proptech" | "ai";
 
 export interface Project {
@@ -60,6 +76,9 @@ export interface Project {
   duration: string;
   features: ProjectFeature[];
   processSteps: ProjectProcessStep[];
+  gallery: ProjectGalleryItem[];
+  visualShowcases: VisualShowcaseItem[];
+  deliverables: string[];
   liveUrl?: string;
   techStack: string[];
   deliveryDays: string;
@@ -154,6 +173,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "kw-1",
+        title: "Curated Flagship Collection",
+        subtitle: "High-resolution teak and walnut interior suites with sub-second catalog filter response",
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1200&auto=format&fit=crop",
+        tag: "FLAGSHIP STOREFRONT",
+      },
+      {
+        id: "kw-2",
+        title: "Interactive 3D WebGL Configurator",
+        subtitle: "60fps real-time customizer allowing live wood texture swap and dimension modifications",
+        image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1200&auto=format&fit=crop",
+        tag: "3D CONFIGURATOR",
+      },
+      {
+        id: "kw-3",
+        title: "Modular Component Specs & Pricing",
+        subtitle: "Dynamic dimension matrix calculating raw lumber volume and quotation values instantly",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1200&auto=format&fit=crop",
+        tag: "SPECIFICATION SHEET",
+      },
+      {
+        id: "kw-4",
+        title: "Frictionless One-Page Checkout",
+        subtitle: "Streamlined accordion payment funnel with automated PIN-code courier validation & credit EMI",
+        image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1200&auto=format&fit=crop",
+        tag: "CHECKOUT WORKFLOW",
+      },
+      {
+        id: "kw-5",
+        title: "Spatial Living Room Visualizer",
+        subtitle: "Scale-accurate architectural staging enabling prospective homeowners to preview setups",
+        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+        tag: "SPATIAL PREVIEW",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "Bespoke 3D Configurator & Material Shaders",
+        category: "INTERACTIVE WEBGL",
+        description: "Engineered with Three.js shaders replicating natural Burma teak wood grain and dynamic light refraction. Buyers can inspect joinery details, swap upholstery fabrics, and preview custom dimensions in real time.",
+        image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["60fps WebGL Engine", "Real-Time Teak Shaders", "Instant Price Quoting"],
+      },
+      {
+        title: "Sub-300ms Filtered Catalog Navigation",
+        category: "PERFORMANCE SSR",
+        description: "Built on Next.js App Router and edge caching, the product catalog sorts through 4,500+ SKU variants with zero cumulative layout shift and instant state updates across mobile and desktop devices.",
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Sub-300ms Search", "0 Cumulative Layout Shift", "Automated Inventory Sync"],
+      },
+    ],
+    deliverables: [
+      "Interactive 3D WebGL Configurator",
+      "Next.js 15 SSR Catalog Architecture",
+      "One-Page Accordion Checkout with EMI",
+      "Showroom ERP Two-Way Stock Synchronization",
+      "Mobile-First Touch Responsive PWA",
+    ],
     liveUrl: "https://kraftwoods.com",
     techStack: ["nextjs", "threejs", "shopify", "tailwind", "stripe"],
     deliveryDays: "16 Days",
@@ -275,6 +354,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "mh-1",
+        title: "Physician Clinical Workstation",
+        subtitle: "Real-time doctor triage console with diagnostic alert flags and patient history timeline",
+        image: "https://images.unsplash.com/photo-1504813184591-01572f98c85f?q=80&w=1200&auto=format&fit=crop",
+        tag: "PHYSICIAN PORTAL",
+      },
+      {
+        id: "mh-2",
+        title: "Automated Laboratory Ingest Feed",
+        subtitle: "Sub-second HL7 and ASTM packet stream from automated pathology blood analyzers",
+        image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=1200&auto=format&fit=crop",
+        tag: "ANALYZER TELEMETRY",
+      },
+      {
+        id: "mh-3",
+        title: "Encrypted Patient Health Vault",
+        subtitle: "AES-256 encrypted digital health records with immutable doctor audit logging",
+        image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1200&auto=format&fit=crop",
+        tag: "PATIENT RECORDS",
+      },
+      {
+        id: "mh-4",
+        title: "Edge Cryptographic PDF Report Engine",
+        subtitle: "350ms watermarked diagnostics generation with cryptographic QR verification signatures",
+        image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1200&auto=format&fit=crop",
+        tag: "VERIFIED REPORTS",
+      },
+      {
+        id: "mh-5",
+        title: "WebRTC Telemedicine Video Room",
+        subtitle: "Zero-install peer-to-peer virtual examination room with digital Rx prescription generation",
+        image: "https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=1200&auto=format&fit=crop",
+        tag: "TELEMEDICINE",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "Automated Pathology Instrument Ingestion",
+        category: "HEALTHCARE IOT",
+        description: "Directly ingests raw HL7 and ASTM protocol streams from regional laboratory hematology analyzers into an encrypted cloud pipeline, completely eliminating manual transcription delays and human error.",
+        image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Zero Manual Data Entry", "350ms Report Generation", "100% HIPAA Compliance"],
+      },
+      {
+        title: "Tokenized One-Click Patient Delivery",
+        category: "USER EXPERIENCE",
+        description: "Patients receive instant SMS notification links backed by expiring cryptographic tokens, allowing immediate mobile access to watermarked test results without requiring complex login friction.",
+        image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Tokenized SMS Links", "One-Click Mobile View", "Watermarked PDF Downloads"],
+      },
+    ],
+    deliverables: [
+      "HIPAA-Compliant Patient Portal",
+      "Edge Cryptographic PDF Report Engine",
+      "Automated HL7/ASTM Protocol Ingest Service",
+      "WebRTC Telehealth Consultation Rooms",
+      "Doctor Scheduling & Triage Queue System",
+    ],
     liveUrl: "https://meridianhealth.example.com",
     techStack: ["react", "nextjs", "typescript", "postgresql", "aws"],
     deliveryDays: "19 Days",
@@ -396,6 +535,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "fp-1",
+        title: "Fleet Operations Map Console",
+        subtitle: "High-density national logistics map tracking active vehicle waypoints and delivery routes",
+        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
+        tag: "OPERATIONS MAP",
+      },
+      {
+        id: "fp-2",
+        title: "Real-Time Telematics & Fuel Monitor",
+        subtitle: "Live telemetry dashboard tracking fuel burn curves, vehicle speed variance, and idle alerts",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
+        tag: "ENGINE METRICS",
+      },
+      {
+        id: "fp-3",
+        title: "Autonomous Driver Dispatch Console",
+        subtitle: "Intelligent freight load assignment and automated electronic consignment note creation",
+        image: "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1200&auto=format&fit=crop",
+        tag: "DISPATCH SCHEDULER",
+      },
+      {
+        id: "fp-4",
+        title: "Proof-of-Delivery Payout Ledger",
+        subtitle: "Instant digital signature verification triggering automated bank payout disbursements",
+        image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1200&auto=format&fit=crop",
+        tag: "BILLING SETTLEMENT",
+      },
+      {
+        id: "fp-5",
+        title: "Mobile Driver Companion PWA",
+        subtitle: "Offline-first driver app providing GPS turn-by-turn guidance and geofenced barcode scans",
+        image: "https://images.unsplash.com/photo-1618042164219-62c820f10723?q=80&w=1200&auto=format&fit=crop",
+        tag: "DRIVER COMPANION",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "High-Frequency Route Telemetry Stream",
+        category: "EVENT STREAMING",
+        description: "Built on Apache Kafka and TimescaleDB, FleetPilot ingests over 10 million GPS data points daily. The system calculates route anomalies, predicts refueling requirements, and notifies dispatchers before delays occur.",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["10M+ Daily Coordinates", "Sub-150ms Spatial Queries", "Real-Time Geofence Alarms"],
+      },
+      {
+        title: "Autonomous Carrier Billing & Ledger",
+        category: "ENTERPRISE ERP",
+        description: "Proof-of-delivery signatures gathered on the driver mobile app trigger automated invoice reconciliation and multi-carrier payment settlements, reducing administrative dispatch overhead by 34%.",
+        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Instant ePOD Settlement", "Automated Tax Calculation", "Zero Reconciliation Delays"],
+      },
+    ],
+    deliverables: [
+      "Real-Time GPS Fleet Tracking Console",
+      "Kafka High-Frequency Event Ingestion Pipeline",
+      "TimescaleDB Spatial Analytics Database",
+      "Driver Mobile Manifest PWA",
+      "Automated Carrier Settlement & Invoicing System",
+    ],
     liveUrl: "https://fleetpilot.example.com",
     techStack: ["react", "nodejs", "typescript", "postgresql", "docker"],
     deliveryDays: "21 Days",
@@ -512,6 +711,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "gt-1",
+        title: "Interactive Bus Floorplan Selector",
+        subtitle: "60fps SVG bus seating layout with real-time seat lock state updates via Redis",
+        image: "https://images.unsplash.com/photo-1494515843206-f3117d3f51b7?q=80&w=1200&auto=format&fit=crop",
+        tag: "SEAT SELECTOR",
+      },
+      {
+        id: "gt-2",
+        title: "Inter-City Schedule & Route Search",
+        subtitle: "Sub-second departure search across 65+ inter-city corridors with dynamic pricing filters",
+        image: "https://images.unsplash.com/photo-1508873696983-2df5293cb32f?q=80&w=1200&auto=format&fit=crop",
+        tag: "ROUTE DISCOVERY",
+      },
+      {
+        id: "gt-3",
+        title: "Frictionless Checkout & GST Invoicing",
+        subtitle: "Instant UPI payment callbacks and automated corporate tax invoices with scannable QR",
+        image: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?q=80&w=1200&auto=format&fit=crop",
+        tag: "CHECKOUT & TAX",
+      },
+      {
+        id: "gt-4",
+        title: "Live GPS Bus Tracking Map",
+        subtitle: "Vehicle coordinates ingested every 5 seconds providing passengers with accurate stop arrival times",
+        image: "https://images.unsplash.com/photo-1520105072000-f44fc0832105?q=80&w=1200&auto=format&fit=crop",
+        tag: "PASSENGER GPS",
+      },
+      {
+        id: "gt-5",
+        title: "Automated WhatsApp Boarding Pass",
+        subtitle: "One-click ticket QR code delivery directly to passenger WhatsApp numbers upon booking",
+        image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop",
+        tag: "MOBILE PASS",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "Interactive 60fps Bus Floorplan Selector",
+        category: "CONCURRENT BOOKING",
+        description: "Engineered using reactive SVGs and Redis TTL ephemeral locks, allowing thousands of concurrent festival travelers to reserve specific sleeper berths without double-booking or transaction deadlocks.",
+        image: "https://images.unsplash.com/photo-1494515843206-f3117d3f51b7?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Redis Ephemeral Locks", "Zero Double Bookings", "Instant Visual State Updates"],
+      },
+      {
+        title: "Live Passenger ETA & Boarding Engine",
+        category: "TRANSIT TELEMETRY",
+        description: "Vehicle coordinates update every 5 seconds to provide passengers with realistic stop arrival estimates and automated WhatsApp boarding pass alerts with verified cryptographic QR validation.",
+        image: "https://images.unsplash.com/photo-1520105072000-f44fc0832105?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["5-Second GPS Refresh", "WhatsApp QR Pass Dispatch", "Dynamic Traffic Recalculation"],
+      },
+    ],
+    deliverables: [
+      "High-Concurrency Seat Booking Engine",
+      "Redis Distributed Lock State Machine",
+      "Automated GST Invoicing & WhatsApp Bot",
+      "Live Passenger Bus Tracking Portal",
+      "Admin Fleet Scheduling & Manifest Dashboard",
+    ],
     liveUrl: "https://gttravels.example.com",
     techStack: ["nextjs", "typescript", "redis", "postgresql", "tailwind"],
     deliveryDays: "18 Days",
@@ -633,6 +892,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "nr-1",
+        title: "Geospatial Vector Map Discovery",
+        subtitle: "Interactive Mapbox GL satellite cluster map with live price tags and zoning polygons",
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
+        tag: "GEOSPATIAL MAP",
+      },
+      {
+        id: "nr-2",
+        title: "360° Spatial Interior Walkthrough",
+        subtitle: "Zero-install WebGL panoramic virtual tour with architectural spatial hot-spots",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
+        tag: "360° VIRTUAL TOUR",
+      },
+      {
+        id: "nr-3",
+        title: "Architectural Floorplan & Specifications",
+        subtitle: "Interactive room dimension overlays, carpet area specs and verified RERA document vault",
+        image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1200&auto=format&fit=crop",
+        tag: "FLOORPLANS",
+      },
+      {
+        id: "nr-4",
+        title: "Interactive EMI & Mortgage Amortization",
+        subtitle: "Dynamic down-payment sliders with real-time banking schedule comparison and PDF export",
+        image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
+        tag: "FINANCING ENGINE",
+      },
+      {
+        id: "nr-5",
+        title: "Automated WhatsApp CRM Dispatch",
+        subtitle: "Sub-15 second buyer lead distribution assigning prospects directly to verified property specialists",
+        image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=1200&auto=format&fit=crop",
+        tag: "CRM INTEGRATION",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "Mapbox GL Satellite Geospatial Clustering",
+        category: "GEOSPATIAL ENGINE",
+        description: "Custom vector tile styling matching Grandeur Net's dark luxury aesthetic. Prospective buyers can zoom into mountain hillside estates with sub-16ms fluid frame rates and filter by property radius.",
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Sub-16ms Pan & Zoom", "Topographical Vector Tiles", "Radius Proximity Filtering"],
+      },
+      {
+        title: "360° Immersive WebGL Spatial Tours",
+        category: "VIRTUAL TOURS",
+        description: "Enables international and out-of-state buyers to inspect villa interiors, master bedrooms, and scenic panoramic terrace views with zero app download friction on any modern smartphone browser.",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["WebGL 360° Engine", "Zero App Download Needed", "High-Resolution HDR Panoramas"],
+      },
+    ],
+    deliverables: [
+      "Mapbox GL Geospatial Property Portal",
+      "WebGL 360° Virtual Tour Player",
+      "Interactive EMI & Amortization Calculator",
+      "Automated WhatsApp Cloud CRM Lead Pipeline",
+      "Verified RERA Compliance Document Vault",
+    ],
     liveUrl: "https://northwindrealty.example.com",
     techStack: ["react", "nextjs", "supabase", "tailwind", "threejs"],
     deliveryDays: "14 Days",
@@ -749,6 +1068,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "ac-1",
+        title: "Autonomous RFP Ingestion Dashboard",
+        subtitle: "Multi-modal extraction pipeline parsing complex solicitations, tables, and compliance requirements",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+        tag: "DOC INGESTION",
+      },
+      {
+        id: "ac-2",
+        title: "pgvector Semantic Query Matcher",
+        subtitle: "Sub-50ms vector similarity matching querying past winning enterprise bids for grounded citations",
+        image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop",
+        tag: "VECTOR RETRIEVAL",
+      },
+      {
+        id: "ac-3",
+        title: "Split-Screen Technical Proposal Editor",
+        subtitle: "Real-time proposal review environment pairing source document citations with generated draft chapters",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+        tag: "AI EDITOR",
+      },
+      {
+        id: "ac-4",
+        title: "Automated Compliance Cross-Checker",
+        subtitle: "Automated agent matrix verifying mandatory technical certifications and proposal criteria",
+        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop",
+        tag: "COMPLIANCE AUDIT",
+      },
+      {
+        id: "ac-5",
+        title: "SOC2 Zero-Data-Retention Vault",
+        subtitle: "Enterprise confidentiality security layer ensuring proprietary bid data is never leaked or retained",
+        image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop",
+        tag: "SECURITY VAULT",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "Autonomous Multi-Agent Technical Drafting",
+        category: "LLM ORCHESTRATION",
+        description: "Specialized AI agents parse complex solicitation clauses, query past winning company proposals via pgvector embeddings, and draft compliant technical chapters with inline citations and zero hallucinations.",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["40+ Hours Saved / Week", "Sub-50ms Vector Retrieval", "Inline Document Citations"],
+      },
+      {
+        title: "Enterprise Split-Screen Proposal Review",
+        category: "COLLABORATIVE WORKSPACE",
+        description: "Sales engineers review source document clauses and AI-generated proposal chapters side-by-side with real-time export to branded Word and PDF documents in under 30 seconds.",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Split-Screen Synchronized View", "One-Click Word/PDF Export", "Strict Zero Data Retention"],
+      },
+    ],
+    deliverables: [
+      "FastAPI Document Parsing Engine",
+      "pgvector Semantic Search Architecture",
+      "Multi-Agent Proposal Drafting Pipeline",
+      "Next.js Split-Screen Proposal Editor",
+      "SOC2 Enterprise Role-Based Access Vault",
+    ],
     liveUrl: "https://apexai.example.com",
     techStack: ["python", "nextjs", "typescript", "postgresql", "docker"],
     deliveryDays: "12 Days",
@@ -865,6 +1244,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "ks-1",
+        title: "Hardware-Accelerated Vector Canvas",
+        subtitle: "120fps WebGL GPU rendering engine manipulating thousands of bezier curves and boolean paths",
+        image: "https://images.unsplash.com/photo-1581291518655-9523c932edcf?q=80&w=1200&auto=format&fit=crop",
+        tag: "WEBGL CANVAS",
+      },
+      {
+        id: "ks-2",
+        title: "Live Multiplayer Presence & Cursors",
+        subtitle: "Sub-20ms remote pointer positions and live collaborative selection halos powered by Yjs CRDTs",
+        image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=1200&auto=format&fit=crop",
+        tag: "MULTIPLAYER YJS",
+      },
+      {
+        id: "ks-3",
+        title: "Automated Tailwind Token Exporter",
+        subtitle: "One-click compilation transforming canvas typography scales and palettes into production Tailwind configs",
+        image: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1200&auto=format&fit=crop",
+        tag: "CODE EXPORTER",
+      },
+      {
+        id: "ks-4",
+        title: "Reusable Component Symbol Library",
+        subtitle: "Design token system with component overrides, nested variants, and auto-layout framing",
+        image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop",
+        tag: "ASSET LIBRARY",
+      },
+      {
+        id: "ks-5",
+        title: "Local-First Offline Persistence",
+        subtitle: "IndexedDB caching enabling uninterrupted offline editing with automatic reconciliation on reconnect",
+        image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200&auto=format&fit=crop",
+        tag: "OFFLINE STATE",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "Hardware-Accelerated WebGL Rendering",
+        category: "GPU COMPUTING",
+        description: "Engineered a custom WebGL rendering loop capable of manipulating thousands of complex vector paths, boolean operations, and blur filters smoothly at 120fps with zero input lag.",
+        image: "https://images.unsplash.com/photo-1581291518655-9523c932edcf?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["120fps Render Loop", "Sub-16ms Paint Latency", "GPU Shader Acceleration"],
+      },
+      {
+        title: "Conflict-Free Replicated State (CRDT)",
+        category: "REAL-TIME SYNC",
+        description: "Powered by Yjs over secure WebSockets, multiple designers can edit identical canvas nodes concurrently without lock contention or lost edits across international network connections.",
+        image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Zero Lock Contention", "Sub-20ms Presence Sync", "Automatic Offline Reconnection"],
+      },
+    ],
+    deliverables: [
+      "GPU-Accelerated Vector WebGL Canvas",
+      "Yjs CRDT Real-Time Collaboration Engine",
+      "Automated Tailwind CSS Token Compiler",
+      "Multiplayer Presence & Cursor Protocol",
+      "Local-First IndexedDB Offline Cache",
+    ],
     liveUrl: "https://kanvasstudio.example.com",
     techStack: ["react", "typescript", "graphql", "threejs", "tailwind"],
     deliveryDays: "17 Days",
@@ -981,6 +1420,66 @@ export const PROJECTS: Project[] = [
       },
     ],
     processSteps: DEFAULT_PROCESS_STEPS,
+    gallery: [
+      {
+        id: "hf-1",
+        title: "Athlete Conditioning Console",
+        subtitle: "Real-time biometric telemetry tracking heart rate zones and live training intensity curves",
+        image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop",
+        tag: "TRAINING CONSOLE",
+      },
+      {
+        id: "hf-2",
+        title: "Bluetooth Low Energy Sensor Pairing",
+        subtitle: "Direct Web Bluetooth sync with smart chest straps and wearable sensors with automatic reconnect",
+        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200&auto=format&fit=crop",
+        tag: "SENSOR STREAM",
+      },
+      {
+        id: "hf-3",
+        title: "Adaptive Video Coaching Stream",
+        subtitle: "Sub-second HLS video buffer playback delivering form demonstration cues across all mobile devices",
+        image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop",
+        tag: "HLS VIDEO PLAYER",
+      },
+      {
+        id: "hf-4",
+        title: "Trainer 1-on-1 Coaching Management",
+        subtitle: "Biometric compliance review and remote program calibration workspace for head athletic coaches",
+        image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=1200&auto=format&fit=crop",
+        tag: "COACH DASHBOARD",
+      },
+      {
+        id: "hf-5",
+        title: "Progressive Overload Analytics",
+        subtitle: "Weekly volume tonnage tracking and recovery readiness scoring to prevent overtraining",
+        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1200&auto=format&fit=crop",
+        tag: "METRICS ENGINE",
+      },
+    ],
+    visualShowcases: [
+      {
+        title: "Web Bluetooth Real-Time Biometric Stream",
+        category: "HARDWARE TELEMETRY",
+        description: "Connects web browsers directly to Bluetooth Low Energy (BLE) chest straps, streaming live heart rate and target zone pacing with zero latency and automatic connection recovery.",
+        image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Zero-Latency BLE Sync", "Instant Heart Rate Zones", "Automatic Sensor Recovery"],
+      },
+      {
+        title: "Automated Progressive Overload Engine",
+        category: "ALGORITHMIC TRAINING",
+        description: "Dynamically calculates weight jumps, sets, and rest intervals based on previous session RPE and biometric heart rate recovery curves to optimize muscle hypertrophy and athletic recovery.",
+        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1200&auto=format&fit=crop",
+        highlights: ["Algorithm-Driven Pacing", "Volume Tonnage Analytics", "Offline PWA Workout Mode"],
+      },
+    ],
+    deliverables: [
+      "Web Bluetooth Biometric Telemetry Engine",
+      "Dynamic Progressive Overload Algorithm",
+      "HLS Low-Latency Coaching Video Player",
+      "Trainer Management & Client Calibration Console",
+      "Stripe Multi-Tier Subscription Pipeline",
+    ],
     liveUrl: "https://heliosperformance.example.com",
     techStack: ["react", "typescript", "nodejs", "supabase", "stripe"],
     deliveryDays: "15 Days",

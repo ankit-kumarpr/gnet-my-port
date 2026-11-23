@@ -5,8 +5,9 @@ const nextConfig = {
     domains: ["images.unsplash.com", "grandeurnet.com"],
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion"],
+    optimizePackageImports: ["lucide-react"],
   },
+  transpilePackages: ["framer-motion"],
   async headers() {
     if (process.env.NODE_ENV === "development") {
       return [];

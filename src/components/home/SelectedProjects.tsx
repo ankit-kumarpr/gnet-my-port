@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -18,16 +18,18 @@ const CATEGORIES: { id: "all" | ProjectCategory; label: string }[] = [
 /* -------------------------------------------------------------------------- */
 /* STREAMLINED 3-COLUMN MINIMAL PROJECT CARD                                  */
 /* -------------------------------------------------------------------------- */
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.4, delay: (index % 3) * 0.08 }}
-      className="h-full"
-    >
+const ProjectCard = forwardRef<HTMLDivElement, { project: Project; index: number }>(
+  ({ project, index }, ref) => {
+    return (
+      <motion.div
+        ref={ref}
+        layout
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.4, delay: (index % 3) * 0.08 }}
+        className="h-full"
+      >
       <Link
         href={`/projects/${project.id}`}
         className="group flex flex-col h-full rounded-2xl bg-[#0C1721] border border-white/[0.08] hover:border-[#00D6A0]/40 p-4 sm:p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.7)] hover:shadow-[0_20px_40px_-15px_rgba(0,214,160,0.18)] transition-all duration-300 hover:-translate-y-1 overflow-hidden"
@@ -64,7 +66,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </Link>
     </motion.div>
   );
-}
+});
+
+ProjectCard.displayName = "ProjectCard";
 
 /* -------------------------------------------------------------------------- */
 /* MAIN SELECTED PROJECTS SECTION (3-COLUMN BALANCED GRID)                    */

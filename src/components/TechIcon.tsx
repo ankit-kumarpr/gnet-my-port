@@ -12,6 +12,8 @@ export type TechName =
   | "mongodb"
   | "laravel"
   | "postgresql"
+  | "mysql"
+  | "php"
   | "threejs"
   | "python"
   | "supabase"
@@ -155,6 +157,31 @@ export const TECH_ICONS: Record<string, { label: string; svg: (size: number) => 
       <svg width={s} height={s} viewBox="0 0 24 24" fill="none">
         <ellipse cx="12" cy="12" rx="9" ry="8" stroke="#336791" strokeWidth="1.5" fill="#336791" fillOpacity="0.12" />
         <path d="M8 10C8 8 10 7 12 7C14 7 16 8 16 10C16 12 14 13 12 13C10 13 8 14 8 16C8 17.5 10 18 12 18" stroke="#336791" strokeWidth="1.4" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  mysql: {
+    label: "MySQL",
+    svg: (s) => (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M3 13C3 13 5 8 10 8C14 8 15 10 17 12C19 14 21 13 21 13C21 13 20 16 16 17C12 18 10 17 8 16C5 15 3 13 3 13Z"
+          stroke="#4479A1"
+          strokeWidth="1.5"
+          fill="#4479A1"
+          fillOpacity="0.15"
+        />
+        <circle cx="17.5" cy="11.5" r="1" fill="#F29111" />
+      </svg>
+    ),
+  },
+  php: {
+    label: "PHP",
+    svg: (s) => (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill="none">
+        <ellipse cx="12" cy="12" rx="10" ry="6" stroke="#777BB4" strokeWidth="1.5" fill="#777BB4" fillOpacity="0.12" />
+        <path d="M7 10V14M7 12H9C9.6 12 10 11.6 10 11C10 10.4 9.6 10 9 10H7Z" stroke="#777BB4" strokeWidth="1.4" />
+        <path d="M12 10V14M12 12H14C14.6 12 15 11.6 15 11C15 10.4 14.6 10 14 10H12Z" stroke="#777BB4" strokeWidth="1.4" />
       </svg>
     ),
   },

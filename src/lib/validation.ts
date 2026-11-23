@@ -19,9 +19,9 @@ export const contactSchema = z.object({
     .trim(),
   phone: z
     .string()
+    .min(6, "Please provide a valid Phone or WhatsApp number")
     .max(30, "Phone number is too long")
-    .optional()
-    .or(z.literal("")),
+    .trim(),
   service: z.string().min(1, "Please select a service"),
   budget: z.string().min(1, "Please select an estimated budget"),
   message: z

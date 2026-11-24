@@ -125,10 +125,10 @@ export default function TechGlobe() {
   }, [updateSize]);
 
   // Scaled dimensions ensuring icons NEVER exceed the container bounds:
-  // Orbit radius is set to 36% of container size (max 185px)
-  const orbitRadius = Math.max(105, Math.min(containerSize * 0.36, 185));
-  const globeSize = Math.max(120, Math.min(containerSize * 0.40, 205));
-  const cardScale = Math.max(0.68, Math.min(containerSize / 460, 1));
+  // Orbit radius is calibrated to 35% of container size (max 175px)
+  const orbitRadius = Math.max(100, Math.min(containerSize * 0.35, 175));
+  const globeSize = Math.max(115, Math.min(containerSize * 0.38, 195));
+  const cardScale = Math.max(0.68, Math.min(containerSize / 460, 0.95));
 
   // Parallax spring tracking on mouse hover
   const mouseX = useMotionValue(0);
@@ -211,26 +211,26 @@ export default function TechGlobe() {
         >
           <defs>
             <linearGradient id="orbitCircleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#10b981" stopOpacity="0.8" />
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.7" />
+              <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#10b981" stopOpacity="0.7" />
             </linearGradient>
 
             <linearGradient id="tiltedArcGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#34d399" stopOpacity="0" />
-              <stop offset="25%" stopColor="#10b981" stopOpacity="0.85" />
-              <stop offset="65%" stopColor="#38bdf8" stopOpacity="0.9" />
+              <stop offset="30%" stopColor="#10b981" stopOpacity="0.8" />
+              <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.7" />
               <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
             </linearGradient>
 
             <linearGradient id="tiltedArcGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.75" />
-              <stop offset="50%" stopColor="#065f46" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.7" />
+              <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#065f46" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.6" />
             </linearGradient>
 
             <filter id="orbitGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feGaussianBlur stdDeviation="2.5" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
@@ -242,9 +242,9 @@ export default function TechGlobe() {
             r={orbitRadius}
             fill="none"
             stroke="url(#orbitCircleGrad)"
-            strokeWidth="1.5"
+            strokeWidth="1.2"
             strokeDasharray="4 6"
-            className="opacity-70"
+            className="opacity-60"
           />
 
           {/* Tilted Elliptical Orbital Arc 1 (Tilted -24 deg) */}
@@ -252,22 +252,13 @@ export default function TechGlobe() {
             <ellipse
               cx="0"
               cy="0"
-              rx={orbitRadius * 1.18}
-              ry={orbitRadius * 0.40}
+              rx={orbitRadius * 1.16}
+              ry={orbitRadius * 0.42}
               fill="none"
               stroke="url(#tiltedArcGrad1)"
-              strokeWidth="2.2"
+              strokeWidth="1.8"
               filter="url(#orbitGlow)"
-              className="opacity-80"
-            />
-            {/* Satellite Beacon */}
-            <circle
-              cx={Math.cos((rotationAngle * 1.5 * Math.PI) / 180) * (orbitRadius * 1.18)}
-              cy={Math.sin((rotationAngle * 1.5 * Math.PI) / 180) * (orbitRadius * 0.40)}
-              r="3"
-              fill="#38bdf8"
-              filter="url(#orbitGlow)"
-              className="animate-pulse"
+              className="opacity-70"
             />
           </g>
 
@@ -276,40 +267,15 @@ export default function TechGlobe() {
             <ellipse
               cx="0"
               cy="0"
-              rx={orbitRadius * 1.10}
-              ry={orbitRadius * 0.34}
+              rx={orbitRadius * 1.08}
+              ry={orbitRadius * 0.36}
               fill="none"
               stroke="url(#tiltedArcGrad2)"
-              strokeWidth="1.6"
-              strokeDasharray="7 5"
-              className="opacity-60"
-            />
-            {/* Satellite Beacon */}
-            <circle
-              cx={Math.cos((-rotationAngle * 1.2 * Math.PI) / 180) * (orbitRadius * 1.10)}
-              cy={Math.sin((-rotationAngle * 1.2 * Math.PI) / 180) * (orbitRadius * 0.34)}
-              r="2.5"
-              fill="#34d399"
-              filter="url(#orbitGlow)"
+              strokeWidth="1.4"
+              strokeDasharray="6 6"
+              className="opacity-50"
             />
           </g>
-
-          {/* Beacons along the main orbital badge track */}
-          {[0, 36, 72, 108, 144, 180, 216, 252, 288, 324].map((deg) => {
-            const rad = (deg * Math.PI) / 180;
-            const bx = Math.cos(rad) * orbitRadius;
-            const by = Math.sin(rad) * orbitRadius;
-            return (
-              <circle
-                key={deg}
-                cx={bx}
-                cy={by}
-                r="2"
-                fill="#34d399"
-                className="opacity-50"
-              />
-            );
-          })}
         </svg>
 
         {/* =========================================================================
@@ -321,51 +287,40 @@ export default function TechGlobe() {
             width: `${globeSize}px`,
             height: `${globeSize}px`,
             background:
-              "radial-gradient(circle at 32% 24%, #10b981 0%, #0d9488 20%, #064e3b 45%, #022c22 70%, #03141c 90%, #01080e 100%)",
+              "radial-gradient(circle at 30% 22%, #10b981 0%, #0d9488 22%, #064e3b 50%, #022c22 75%, #01161a 90%, #01080e 100%)",
             boxShadow:
-              "0 0 60px rgba(16, 185, 129, 0.55), inset -16px -20px 35px rgba(1, 8, 14, 0.95), inset 12px 12px 20px rgba(255, 255, 255, 0.4)",
+              "0 0 50px rgba(16, 185, 129, 0.45), inset -14px -18px 30px rgba(1, 8, 14, 0.95), inset 10px 10px 18px rgba(255, 255, 255, 0.35)",
             transformStyle: "preserve-3d",
           }}
         >
-          {/* Planetary Atmospheric Corona Glow */}
-          <div className="absolute inset-[-8px] sm:inset-[-12px] rounded-full border-2 border-emerald-400/60 shadow-[0_0_40px_rgba(16,185,129,0.6),0_0_15px_rgba(56,189,248,0.4)] animate-pulse pointer-events-none" />
+          {/* Planetary Atmospheric Rim Lighting */}
+          <div className="absolute inset-[-6px] sm:inset-[-8px] rounded-full border border-emerald-400/40 shadow-[0_0_30px_rgba(16,185,129,0.45)] pointer-events-none" />
 
-          {/* Crescent Lighting */}
+          {/* Specular Highlight Arc */}
           <div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
               background:
-                "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(52,211,153,0.12) 30%, transparent 60%, rgba(0,0,0,0.85) 100%)",
+                "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(52,211,153,0.1) 28%, transparent 55%, rgba(0,0,0,0.8) 100%)",
             }}
           />
 
-          {/* Rotating Meridians & City Light Constellations */}
+          {/* Rotating Subtle Architectural Grid Coordinates */}
           <div
-            className="absolute inset-0 rounded-full overflow-hidden pointer-events-none opacity-70"
+            className="absolute inset-0 rounded-full overflow-hidden pointer-events-none opacity-50"
             style={{
-              transform: `rotate(${rotationAngle * 0.45}deg)`,
+              transform: `rotate(${rotationAngle * 0.4}deg)`,
               transition: "transform 0.08s linear",
             }}
           >
             <svg className="w-full h-full" viewBox="0 0 100 100">
-              {/* Latitude parallels */}
-              <ellipse cx="50" cy="50" rx="47" ry="15" fill="none" stroke="#6ee7b7" strokeWidth="0.8" opacity="0.75" />
-              <ellipse cx="50" cy="50" rx="47" ry="30" fill="none" stroke="#6ee7b7" strokeWidth="0.8" opacity="0.65" />
-              <ellipse cx="50" cy="50" rx="47" ry="47" fill="none" stroke="#6ee7b7" strokeWidth="1.2" opacity="0.85" />
-              {/* Longitude meridians */}
-              <ellipse cx="50" cy="50" rx="15" ry="47" fill="none" stroke="#6ee7b7" strokeWidth="0.8" opacity="0.75" />
-              <ellipse cx="50" cy="50" rx="30" ry="47" fill="none" stroke="#6ee7b7" strokeWidth="0.8" opacity="0.65" />
-              <line x1="50" y1="3" x2="50" y2="97" stroke="#6ee7b7" strokeWidth="0.75" opacity="0.7" />
-              <line x1="3" y1="50" x2="97" y2="50" stroke="#6ee7b7" strokeWidth="0.75" opacity="0.7" />
-
-              {/* City-Light Clusters */}
-              <circle cx="34" cy="32" r="1.8" fill="#34d399" className="animate-ping" style={{ animationDuration: "3s" }} />
-              <circle cx="38" cy="28" r="1.4" fill="#38bdf8" />
-              <circle cx="42" cy="35" r="1.6" fill="#facc15" />
-              <circle cx="66" cy="40" r="2.2" fill="#10b981" className="animate-ping" style={{ animationDuration: "2s" }} />
-              <circle cx="68" cy="42" r="1.5" fill="#facc15" />
-              <circle cx="72" cy="46" r="1.4" fill="#38bdf8" />
-              <circle cx="52" cy="68" r="1.6" fill="#a7f3d0" />
+              <ellipse cx="50" cy="50" rx="47" ry="16" fill="none" stroke="#6ee7b7" strokeWidth="0.7" opacity="0.6" />
+              <ellipse cx="50" cy="50" rx="47" ry="32" fill="none" stroke="#6ee7b7" strokeWidth="0.7" opacity="0.5" />
+              <ellipse cx="50" cy="50" rx="47" ry="47" fill="none" stroke="#6ee7b7" strokeWidth="1" opacity="0.7" />
+              <ellipse cx="50" cy="50" rx="16" ry="47" fill="none" stroke="#6ee7b7" strokeWidth="0.7" opacity="0.6" />
+              <ellipse cx="50" cy="50" rx="32" ry="47" fill="none" stroke="#6ee7b7" strokeWidth="0.7" opacity="0.5" />
+              <line x1="50" y1="3" x2="50" y2="97" stroke="#6ee7b7" strokeWidth="0.7" opacity="0.6" />
+              <line x1="3" y1="50" x2="97" y2="50" stroke="#6ee7b7" strokeWidth="0.7" opacity="0.6" />
             </svg>
           </div>
 
@@ -373,17 +328,17 @@ export default function TechGlobe() {
           <div className="relative z-20 flex flex-col items-center justify-center pointer-events-none">
             <motion.div
               animate={{
-                scale: isGlobeHovered ? [1, 1.06, 1] : [1, 1.03, 1],
+                scale: isGlobeHovered ? [1, 1.05, 1] : [1, 1.02, 1],
               }}
-              transition={{ duration: isGlobeHovered ? 1.5 : 3, repeat: Infinity, ease: "easeInOut" }}
-              className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-300 via-brand-green to-emerald-950 flex items-center justify-center shadow-[0_0_45px_rgba(16,185,129,0.9)] border-2 border-emerald-200/80"
+              transition={{ duration: isGlobeHovered ? 1.6 : 3, repeat: Infinity, ease: "easeInOut" }}
+              className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-300 via-brand-green to-emerald-950 flex items-center justify-center shadow-[0_0_35px_rgba(16,185,129,0.7)] border border-emerald-200/70"
               style={{
-                width: `${Math.round(globeSize * 0.44)}px`,
-                height: `${Math.round(globeSize * 0.44)}px`,
+                width: `${Math.round(globeSize * 0.42)}px`,
+                height: `${Math.round(globeSize * 0.42)}px`,
               }}
             >
               <span
-                className="font-black italic tracking-tighter text-brand-dark drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]"
+                className="font-black italic tracking-tighter text-[#050A0B] drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
                 style={{ fontSize: `${Math.round(globeSize * 0.22)}px` }}
               >
                 G
@@ -414,65 +369,35 @@ export default function TechGlobe() {
               style={{
                 left: `calc(50% + ${x}px)`,
                 top: `calc(50% + ${y}px)`,
-                transform: `translate(-50%, -50%) scale(${cardScale * (isHovered ? 1.15 : 1)})`,
+                transform: `translate(-50%, -50%) scale(${cardScale * (isHovered ? 1.12 : 1)})`,
                 zIndex: isHovered ? 40 : 25,
               }}
             >
               {/* Radial Glowing Aura on Hover */}
               {isHovered && (
                 <div
-                  className="absolute inset-[-10px] rounded-xl blur-md pointer-events-none transition-opacity duration-300"
+                  className="absolute inset-[-8px] rounded-xl blur-md pointer-events-none transition-opacity duration-300"
                   style={{ background: tech.bgGlow }}
                 />
               )}
 
-              {/* Connecting Laser Beam to Central Globe when Hovered */}
-              {isHovered && (
-                <svg
-                  className="absolute pointer-events-none z-[-1] overflow-visible"
-                  style={{ left: 0, top: 0 }}
-                >
-                  <line
-                    x1="0"
-                    y1="0"
-                    x2={-x}
-                    y2={-y}
-                    stroke="#10b981"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 3"
-                    className="animate-pulse"
-                  />
-                </svg>
-              )}
-
               {/* Glossy Tech Badge Card */}
               <div
-                className={`relative px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 border backdrop-blur-md shadow-xl ${
+                className={`relative px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 border backdrop-blur-md shadow-xl ${
                   isHovered
-                    ? "bg-[#07131d]/98 border-brand-green shadow-[0_0_22px_rgba(16,185,129,0.5)]"
-                    : "bg-[#06111a]/90 border-white/[0.12] hover:border-brand-green/60 shadow-[0_6px_16px_rgba(0,0,0,0.7)]"
+                    ? "bg-[#07131d]/98 border-[#00D6A0] shadow-[0_0_20px_rgba(0,214,160,0.4)]"
+                    : "bg-[#06111a]/90 border-white/[0.10] hover:border-[#00D6A0]/50 shadow-[0_6px_16px_rgba(0,0,0,0.7)]"
                 }`}
                 style={{
-                  minWidth: "54px",
+                  minWidth: "52px",
                 }}
               >
                 <div className={`transition-transform duration-300 group-hover:scale-110 ${tech.color}`}>
                   <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <span className="text-[9px] sm:text-[10px] font-mono font-bold text-white tracking-tight group-hover:text-brand-green transition-colors">
+                <span className="text-[9px] sm:text-[10px] font-mono font-bold text-white tracking-tight group-hover:text-[#00D6A0] transition-colors">
                   {tech.name}
                 </span>
-
-                {/* Micro Tooltip on Hover */}
-                {isHovered && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="absolute -bottom-6 whitespace-nowrap px-2 py-0.5 rounded-md bg-brand-navy border border-brand-green/60 text-[8px] sm:text-[9px] font-mono font-semibold text-brand-green shadow-xl pointer-events-none z-50"
-                  >
-                    {tech.category}
-                  </motion.div>
-                )}
               </div>
             </div>
           );

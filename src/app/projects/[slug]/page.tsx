@@ -20,8 +20,16 @@ import {
   Code2,
 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { PROJECTS, getProjectBySlug, getAllProjectSlugs } from "@/data/projects";
+import {
+  getDynamicProjectBySlug,
+  getPublishedProjects,
+  getAllDynamicProjectSlugs,
+} from "@/lib/projects";
 import TechIcon from "@/components/TechIcon";
+
+// Allow revalidation so newly published projects in admin appear dynamically
+export const revalidate = 60;
+export const dynamicParams = true;
 
 const ProjectImageShowcase = dynamic(
   () => import("@/components/project/ProjectImageShowcase"),
@@ -29,19 +37,20 @@ const ProjectImageShowcase = dynamic(
 );
 
 // Pre-render static paths for all projects
-export function generateStaticParams() {
-  return getAllProjectSlugs().map((slug) => ({
+export async function generateStaticParams() {
+  const slugs = await getAllDynamicProjectSlugs();
+  return slugs.map((slug) => ({
     slug,
   }));
 }
 
 // Dynamic SEO metadata
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
-}): Metadata {
-  const project = getProjectBySlug(params.slug);
+}): Promise<Metadata> {
+  const project = await getDynamicProjectBySlug(params.slug);
   if (!project) {
     return {
       title: "Project Not Found — Grandeur Net",
@@ -61,22 +70,26 @@ export function generateMetadata({
 // Feature icons lookup map
 const FEATURE_ICONS = [Sparkles, Cpu, Layers, ShieldCheck, Zap, Activity];
 
-export default function ProjectDetailPage({
+export default async function ProjectDetailPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const project = getProjectBySlug(params.slug);
+  const [project, allProjects] = await Promise.all([
+    getDynamicProjectBySlug(params.slug),
+    getPublishedProjects(),
+  ]);
 
   if (!project) {
     notFound();
   }
 
   // Prev / Next Project Navigation
-  const currentIndex = PROJECTS.findIndex((p) => p.id === project.id);
-  const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
+  const list = allProjects.length > 0 ? allProjects : [project];
+  const currentIndex = list.findIndex((p) => p.id === project.id);
+  const nextProject = list[(currentIndex + 1) % list.length];
   const prevProject =
-    PROJECTS[(currentIndex - 1 + PROJECTS.length) % PROJECTS.length];
+    list[(currentIndex - 1 + list.length) % list.length];
 
   return (
     <div className="min-h-screen bg-[#050A0B] text-[#F5F8FA] selection:bg-[#00D6A0] selection:text-[#050A0B]">

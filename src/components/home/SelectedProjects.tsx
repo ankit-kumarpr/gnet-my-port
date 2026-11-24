@@ -73,13 +73,22 @@ ProjectCard.displayName = "ProjectCard";
 /* -------------------------------------------------------------------------- */
 /* MAIN SELECTED PROJECTS SECTION (3-COLUMN BALANCED GRID)                    */
 /* -------------------------------------------------------------------------- */
-export default function SelectedProjects() {
+interface SelectedProjectsProps {
+  initialProjects?: Project[];
+}
+
+export default function SelectedProjects({
+  initialProjects = PROJECTS,
+}: SelectedProjectsProps) {
   const [activeCategory, setActiveCategory] = useState<"all" | ProjectCategory>("all");
+
+  const projectsToDisplay =
+    initialProjects && initialProjects.length > 0 ? initialProjects : PROJECTS;
 
   const filteredProjects =
     activeCategory === "all"
-      ? PROJECTS
-      : PROJECTS.filter((p) => p.category === activeCategory);
+      ? projectsToDisplay
+      : projectsToDisplay.filter((p) => p.category === activeCategory);
 
   return (
     <section id="projects" className="py-20 md:py-28 px-6 md:px-12 bg-[#050A0B] relative">

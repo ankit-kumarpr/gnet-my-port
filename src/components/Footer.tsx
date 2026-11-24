@@ -1,7 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Github, Linkedin, Twitter, Mail, MapPin, ShieldCheck, Heart } from "lucide-react";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Do not render public footer on admin routes
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
   return (
     <footer className="bg-[#F8FAFC] dark:bg-[#05090C] border-t border-slate-200 dark:border-white/[0.08] text-slate-600 dark:text-[#A7B5C5] py-16 px-6 md:px-12 relative overflow-hidden transition-colors duration-300">
       {/* Ambient background glow */}

@@ -22,6 +22,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
+  // Do not render public navbar on admin dashboard & portal routes
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);

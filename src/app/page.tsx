@@ -3,15 +3,20 @@ import SelectedProjects from "@/components/home/SelectedProjects";
 import ServicesSection from "@/components/home/ServicesSection";
 import EngineeringProcess from "@/components/home/EngineeringProcess";
 import ProjectContact from "@/components/home/ProjectContact";
+import { getPublishedProjects } from "@/lib/projects";
 
-export default function HomePage() {
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const projects = await getPublishedProjects();
+
   return (
     <>
       {/* 1. Hero */}
       <Hero />
 
       {/* 2. Featured Projects */}
-      <SelectedProjects />
+      <SelectedProjects initialProjects={projects} />
 
       {/* 3. Technology & Services */}
       <ServicesSection />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import dynamic from "next/dynamic";
+import gsap from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
@@ -18,12 +18,6 @@ import {
   LucideIcon,
 } from "lucide-react";
 import Service3DObject from "./services/Service3DObject";
-
-// Dynamically import Three.js backdrop for zero SSR overhead and low-power ambient illumination
-const ServicesCanvasBackdrop = dynamic(
-  () => import("./services/ServicesCanvasBackdrop"),
-  { ssr: false }
-);
 
 export interface ServiceDetail {
   id: string;
@@ -139,10 +133,250 @@ export const SERVICES_DATA: ServiceDetail[] = [
 export default function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
-  const carouselStageRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const touchStartXRef = useRef<number | null>(null);
+  const isMountedRef = useRef(false);
 
   const activeService = SERVICES_DATA[activeIndex];
+
+  // =========================================================================
+  // MATHEMATICALLY SYMMETRICAL 3D TRANSFORM GEOMETRY FOR ALL BREAKPOINTS
+  // =========================================================================
+  const getCardTransforms = useCallback((diff: number, windowWidth: number) => {
+    const isDesktop = windowWidth >= 1024;
+    const isTablet = windowWidth >= 768 && windowWidth < 1024;
+
+    if (isDesktop) {
+      // Desktop composition: 5 visible cards (2 left, 1 center, 2 right)
+      // Balanced visual gap taking card scale into account
+      const spacing1 = Math.min(320, Math.max(260, windowWidth * 0.225));
+      const spacing2 = Math.min(590, Math.max(480, spacing1 * 1.88));
+
+      if (diff === 0) {
+        return {
+          x: 0,
+          scale: 1.04,
+          rotateY: 0,
+          z: 90,
+          opacity: 1,
+          zIndex: 30,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === 1) {
+        return {
+          x: spacing1,
+          scale: 0.88,
+          rotateY: -16,
+          z: 20,
+          opacity: 0.75,
+          zIndex: 20,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === -1) {
+        return {
+          x: -spacing1,
+          scale: 0.88,
+          rotateY: 16,
+          z: 20,
+          opacity: 0.75,
+          zIndex: 20,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === 2) {
+        return {
+          x: spacing2,
+          scale: 0.74,
+          rotateY: -26,
+          z: -50,
+          opacity: 0.42,
+          zIndex: 10,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === -2) {
+        return {
+          x: -spacing2,
+          scale: 0.74,
+          rotateY: 26,
+          z: -50,
+          opacity: 0.42,
+          zIndex: 10,
+          pointerEvents: "auto" as const,
+        };
+      } else {
+        // Wrap/Hidden card (diff === 3 or -3)
+        return {
+          x: diff > 0 ? spacing2 * 1.32 : -spacing2 * 1.32,
+          scale: 0.58,
+          rotateY: diff > 0 ? -32 : 32,
+          z: -120,
+          opacity: 0,
+          zIndex: 1,
+          pointerEvents: "none" as const,
+        };
+      }
+    } else if (isTablet) {
+      // Tablet composition: 3 visible cards (1 left, 1 center, 1 right)
+      const spacing1 = Math.min(270, Math.max(220, windowWidth * 0.3));
+
+      if (diff === 0) {
+        return {
+          x: 0,
+          scale: 1.02,
+          rotateY: 0,
+          z: 60,
+          opacity: 1,
+          zIndex: 30,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === 1) {
+        return {
+          x: spacing1,
+          scale: 0.84,
+          rotateY: -14,
+          z: 10,
+          opacity: 0.68,
+          zIndex: 20,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === -1) {
+        return {
+          x: -spacing1,
+          scale: 0.84,
+          rotateY: 14,
+          z: 10,
+          opacity: 0.68,
+          zIndex: 20,
+          pointerEvents: "auto" as const,
+        };
+      } else {
+        return {
+          x: diff > 0 ? 440 : -440,
+          scale: 0.6,
+          rotateY: diff > 0 ? -24 : 24,
+          z: -80,
+          opacity: 0,
+          zIndex: 5,
+          pointerEvents: "none" as const,
+        };
+      }
+    } else {
+      // Mobile composition: 1 main centered card with subtle neighboring peeking
+      const mobileSpacing = Math.min(290, windowWidth * 0.8);
+
+      if (diff === 0) {
+        return {
+          x: 0,
+          scale: 1,
+          rotateY: 0,
+          z: 30,
+          opacity: 1,
+          zIndex: 30,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === 1) {
+        return {
+          x: mobileSpacing,
+          scale: 0.84,
+          rotateY: -10,
+          z: -20,
+          opacity: 0.35,
+          zIndex: 15,
+          pointerEvents: "auto" as const,
+        };
+      } else if (diff === -1) {
+        return {
+          x: -mobileSpacing,
+          scale: 0.84,
+          rotateY: 10,
+          z: -20,
+          opacity: 0.35,
+          zIndex: 15,
+          pointerEvents: "auto" as const,
+        };
+      } else {
+        return {
+          x: diff > 0 ? 420 : -420,
+          scale: 0.6,
+          rotateY: diff > 0 ? -20 : 20,
+          z: -100,
+          opacity: 0,
+          zIndex: 2,
+          pointerEvents: "none" as const,
+        };
+      }
+    }
+  }, []);
+
+  // =========================================================================
+  // GSAP SMOOTH HORIZONTAL TRACK & PERSPECTIVE TWEENING
+  // =========================================================================
+  const animateCards = useCallback(
+    (targetIndex: number, immediate = false) => {
+      if (typeof window === "undefined") return;
+
+      const windowWidth = window.innerWidth;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      SERVICES_DATA.forEach((_, index) => {
+        const cardEl = cardRefs.current[index];
+        if (!cardEl) return;
+
+        // Wrapped symmetric relative distance from active card
+        let diff = index - targetIndex;
+        if (diff < -3) diff += 6;
+        if (diff > 2) diff -= 6;
+
+        const transforms = getCardTransforms(diff, windowWidth);
+
+        cardEl.style.zIndex = transforms.zIndex.toString();
+        cardEl.style.pointerEvents = transforms.pointerEvents;
+
+        if (immediate || reducedMotion) {
+          gsap.set(cardEl, {
+            x: transforms.x,
+            scale: transforms.scale,
+            rotateY: reducedMotion ? 0 : transforms.rotateY,
+            z: reducedMotion ? 0 : transforms.z,
+            opacity: transforms.opacity,
+          });
+        } else {
+          gsap.to(cardEl, {
+            x: transforms.x,
+            scale: transforms.scale,
+            rotateY: transforms.rotateY,
+            z: transforms.z,
+            opacity: transforms.opacity,
+            duration: 0.65,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        }
+      });
+    },
+    [getCardTransforms]
+  );
+
+  // Initialize and run GSAP animations
+  useEffect(() => {
+    isMountedRef.current = true;
+    animateCards(activeIndex, true);
+
+    const handleResize = () => {
+      animateCards(activeIndex, true);
+    };
+
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [animateCards, activeIndex]);
+
+  // When activeIndex changes, animate smoothly
+  useEffect(() => {
+    if (!isMountedRef.current) return;
+    animateCards(activeIndex, false);
+  }, [activeIndex, animateCards]);
 
   // Navigation handlers
   const handleNext = useCallback(() => {
@@ -178,7 +412,7 @@ export default function ServicesSection() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleNext, handlePrev]);
 
-  // Touch swipe support
+  // Touch swipe support for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
   };
@@ -203,18 +437,25 @@ export default function ServicesSection() {
       aria-label="Our Expertise & Services"
       className="py-24 sm:py-32 md:py-36 px-4 sm:px-6 md:px-10 lg:px-16 bg-[#04080C] relative overflow-hidden select-none"
     >
-      {/* =========================================================================
-          DEEP OBSIDIAN CANVAS & AMBIENT RADIAL LIGHTING
-          ========================================================================= */}
-      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#0E2337]/35 rounded-full blur-[170px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[550px] h-[550px] bg-[#00D6A0]/[0.05] rounded-full blur-[180px] pointer-events-none" />
-      <div className="absolute inset-0 cyber-grid pointer-events-none opacity-[0.10]" />
-
-      {/* Dynamic Three.js ambient particle backdrop */}
-      <ServicesCanvasBackdrop activeIdx={activeIndex} />
+      {/* =======================================================================
+          MINIMAL, SOPHISTICATED BACKGROUND:
+          Quiet deep charcoal with soft depth shadow and subtle emerald reflection
+          behind the active card. Zero distracting particle or line animations.
+          ======================================================================= */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[850px] h-[380px] sm:h-[480px] bg-[#00D6A0]/[0.035] rounded-full blur-[140px] pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(4, 8, 12, 0.75) 100%)",
+        }}
+        aria-hidden="true"
+      />
 
       <div className="max-w-7xl mx-auto space-y-12 sm:space-y-14 relative z-10">
-
         {/* =======================================================================
             SECTION MASTHEAD
             Small label: OUR EXPERTISE
@@ -240,120 +481,67 @@ export default function ServicesSection() {
 
           {/* Supporting Description aligned to the right on desktop */}
           <p className="text-sm sm:text-base md:text-lg text-[#94A3B8] font-normal leading-relaxed max-w-lg lg:text-right">
-            From intelligent software to high-performance digital experiences, we turn ambitious ideas into products that make a measurable difference.
+            From intelligent software to high-performance digital experiences, we turn ambitious
+            ideas into products that make a measurable difference.
           </p>
         </div>
 
         {/* =======================================================================
             CINEMATIC 3D PERSPECTIVE CAROUSEL STAGE
-            Connected 6-service composition with center focus, controlled depth,
-            subtle perspective rotation, and partially visible adjacent cards.
+            Single continuous horizontal track centered in viewport.
+            Symmetrical 5-card layout on desktop (2 left, 1 center, 2 right).
             ======================================================================= */}
         <div
-          ref={carouselStageRef}
+          ref={trackRef}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative w-full h-[470px] sm:h-[500px] md:h-[520px] flex items-center justify-center overflow-visible perspective-[1200px]"
+          className="relative w-full h-[480px] sm:h-[500px] md:h-[520px] flex items-center justify-center overflow-visible perspective-[1200px]"
         >
           {SERVICES_DATA.map((service, index) => {
-            // Calculate wrapped symmetric relative distance from active card
             let diff = index - activeIndex;
             if (diff < -3) diff += 6;
             if (diff > 2) diff -= 6;
 
             const isCenter = diff === 0;
             const isImmediateAdjacent = Math.abs(diff) === 1;
-            const isOuter = Math.abs(diff) === 2;
-
-            // Responsive offset calculations for 3D stage
-            let xOffset = "0%";
-            let zOffset = 0;
-            let rotateY = 0;
-            let scale = 1;
-            let opacity = 1;
-            let zIndex = 30;
-
-            if (diff === 0) {
-              xOffset = "0%";
-              zOffset = 120;
-              rotateY = 0;
-              scale = 1.05;
-              opacity = 1;
-              zIndex = 30;
-            } else if (diff === 1) {
-              xOffset = "clamp(210px, 28vw, 340px)";
-              zOffset = 25;
-              rotateY = -18;
-              scale = 0.86;
-              opacity = 0.8;
-              zIndex = 20;
-            } else if (diff === -1) {
-              xOffset = "-clamp(210px, 28vw, 340px)";
-              zOffset = 25;
-              rotateY = 18;
-              scale = 0.86;
-              opacity = 0.8;
-              zIndex = 20;
-            } else if (diff === 2) {
-              xOffset = "clamp(390px, 50vw, 580px)";
-              zOffset = -60;
-              rotateY = -28;
-              scale = 0.72;
-              opacity = 0.42;
-              zIndex = 10;
-            } else if (diff === -2) {
-              xOffset = "-clamp(390px, 50vw, 580px)";
-              zOffset = -60;
-              rotateY = 28;
-              scale = 0.72;
-              opacity = 0.42;
-              zIndex = 10;
-            } else {
-              // Far back card (hidden on small viewports, subtle hint on ultra-wide)
-              xOffset = diff > 0 ? "700px" : "-700px";
-              zOffset = -140;
-              rotateY = diff > 0 ? -36 : 36;
-              scale = 0.6;
-              opacity = 0.15;
-              zIndex = 5;
-            }
-
             const Icon = service.icon;
 
             return (
-              <motion.div
+              <div
                 key={service.id}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
                 onClick={() => handleSelect(index)}
-                animate={{
-                  x: xOffset,
-                  z: zOffset,
-                  rotateY: rotateY,
-                  scale: scale,
-                  opacity: opacity,
-                }}
-                transition={{
-                  duration: 0.65,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
                 style={{
                   transformStyle: "preserve-3d",
-                  zIndex: zIndex,
+                  willChange: "transform, opacity",
                 }}
-                className={`absolute top-0 bottom-0 my-auto w-[285px] sm:w-[320px] md:w-[340px] h-[430px] sm:h-[455px] md:h-[470px] rounded-3xl p-5 sm:p-6 cursor-pointer flex flex-col justify-between transition-colors duration-500 backdrop-blur-xl ${
+                className={`absolute top-0 bottom-0 my-auto w-[285px] sm:w-[320px] md:w-[340px] h-[440px] sm:h-[465px] md:h-[480px] rounded-3xl p-5 sm:p-6 cursor-pointer flex flex-col justify-between transition-colors duration-300 backdrop-blur-xl ${
                   isCenter
-                    ? "bg-[#09131C]/95 border-2 border-[#00D6A0]/50 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95),0_0_40px_rgba(0,214,160,0.2)]"
+                    ? "bg-[#08121A]/95 border-2 border-[#00D6A0]/45 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.95),0_0_35px_rgba(0,214,160,0.15),inset_0_1px_0_rgba(255,255,255,0.15)]"
                     : isImmediateAdjacent
-                    ? "bg-[#070D14]/85 border border-white/15 hover:border-[#00D6A0]/30 hover:opacity-100 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.85)]"
-                    : "bg-[#050A0F]/70 border border-white/[0.08] shadow-[0_15px_30px_rgba(0,0,0,0.7)]"
+                    ? "bg-[#060B10]/85 border border-white/[0.12] hover:border-[#00D6A0]/30 hover:bg-[#070F17]/90 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.85)]"
+                    : "bg-[#05090E]/75 border border-white/[0.08] hover:border-white/20 shadow-[0_15px_30px_rgba(0,0,0,0.7)]"
                 }`}
                 aria-label={`Select ${service.title}`}
               >
+                {/* Subtle emerald reflection behind the active card */}
+                {isCenter && (
+                  <div
+                    className="absolute -inset-1 rounded-3xl bg-gradient-to-b from-[#00D6A0]/20 to-transparent blur-xl pointer-events-none -z-10"
+                    aria-hidden="true"
+                  />
+                )}
+
                 {/* Card Top: Number Index + Category Icon */}
                 <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                   <div className="flex items-center gap-2">
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                        isCenter ? "bg-[#00D6A0]/20 text-[#00D6A0]" : "bg-white/[0.05] text-slate-400"
+                        isCenter
+                          ? "bg-[#00D6A0]/20 text-[#00D6A0]"
+                          : "bg-white/[0.05] text-slate-400"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -364,7 +552,8 @@ export default function ServicesSection() {
                   </div>
 
                   {isCenter && (
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold text-[#00D6A0] bg-[#00D6A0]/15 border border-[#00D6A0]/30 uppercase tracking-wider">
+                    <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold text-[#00D6A0] bg-[#00D6A0]/15 border border-[#00D6A0]/30 uppercase tracking-wider">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D6A0] animate-pulse" />
                       ACTIVE
                     </span>
                   )}
@@ -375,7 +564,7 @@ export default function ServicesSection() {
                   <Service3DObject serviceId={service.id} isActive={isCenter} />
                 </div>
 
-                {/* Card Bottom: Service Title, Tagline & Capabilities */}
+                {/* Card Bottom: Service Title, Tagline & Action */}
                 <div className="space-y-2 pt-2 border-t border-white/[0.08] text-left">
                   <h3
                     className={`text-lg sm:text-xl font-bold tracking-tight leading-snug ${
@@ -405,7 +594,7 @@ export default function ServicesSection() {
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
@@ -419,7 +608,7 @@ export default function ServicesSection() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.35 }}
             className="rounded-2xl bg-[#070D14]/90 border border-white/[0.08] p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-xl"
           >
             {/* Left: Active Service Overview */}
@@ -508,7 +697,6 @@ export default function ServicesSection() {
             </button>
           </div>
         </div>
-
       </div>
     </section>
   );
